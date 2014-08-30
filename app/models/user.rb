@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
             :presence => true,
             :length => {:minimum => 4}
 
-  validates :email, :presnce => true, :uniqueness => {cas_sensitive: false}
+  validates :email, :presence => true, :uniqueness => {cas_sensitive: false}
   validates :email, :format => {:with => /\A([\w-]|\.)+@([\w-]|\.)+\.[a-z]{2,3}\z/i}
   validates :passwod, :presence => true, :length => {:minimum => 6}, on: :create
 

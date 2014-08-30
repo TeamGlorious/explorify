@@ -31,11 +31,11 @@ group :development do
   gem 'spring'
   gem 'pry'
   gem 'pry-rails'
-  gem 'letter_opener'
 end
 
 group :development, :test do
       gem 'rspec-rails', '~> 3.0.0'
+      gem 'letter_opener'
 end
 
 # Use ActiveModel has_secure_password

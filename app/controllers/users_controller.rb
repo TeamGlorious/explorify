@@ -3,9 +3,14 @@ class UsersController < ApplicationController
   end
 
   def new
+    @user = User.new
   end
 
   def create
+    puts '*'*50
+    puts 'Creating new User!!!'
+    user_params = params.require(:user).permit(:name, :email, :password, :password_confirmation)
+    user = User.create(user_params)
   end
 
   def edit
