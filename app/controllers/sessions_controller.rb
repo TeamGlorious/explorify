@@ -1,14 +1,18 @@
 class SessionsController < ApplicationController
 
+  def new
+    # Login Form
+  end
+
   def create
     @user = User.authenticate(params[:user][:email], params[:user][:password])
 
     if @user
       session[:user_id] = @user.id
+      redirect_to users_path, :notice => "You've logged in!"
     else
-      render text: "Invalid login!"
+      render :new
     end
-    redirect_to @user
   end
 
   def destroy
