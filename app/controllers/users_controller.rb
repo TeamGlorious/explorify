@@ -10,7 +10,8 @@ class UsersController < ApplicationController
     puts '*'*50
     puts 'Creating new User!!!'
     user_params = params.require(:user).permit(:name, :email, :password, :password_confirmation)
-    user = User.create(user_params)
+    @user = User.create(user_params)
+    redirect_to @user
   end
 
   def edit
@@ -20,6 +21,8 @@ class UsersController < ApplicationController
   end
 
   def show
+    @user = User.find_by_id(params[:id])
+    @current_user = current_user
   end
 
   def destroy

@@ -1,0 +1,6 @@
+<h2>Password Reset</h2>
+<%= form_tag password_path(@code), method: "put" do %>
+  <%= password_field :password, nil, placeholder: "Password" %>
+  <%= password_field :password_confirmation, nil, placeholder: "Password confirmation" %>
+  <%= submit_tag "Submit" %>
+<% end %>

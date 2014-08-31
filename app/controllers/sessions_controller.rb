@@ -8,10 +8,11 @@ class SessionsController < ApplicationController
     else
       render text: "Invalid login!"
     end
+    redirect_to @user
   end
 
   def destroy
     session[:user_id] = nil
-    redirect to root_path
+    redirect_to root_path
   end
 end
