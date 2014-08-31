@@ -1,4 +1,3 @@
-// Test Coordinates
 var coordinates = [[37.2,-122.2],[37.3,-121.8],[37.5,-122.1]];
 
 function initialize(){
@@ -28,4 +27,5 @@ function loadScript() {
 }
 
 window.onload = loadScript;
+
 
