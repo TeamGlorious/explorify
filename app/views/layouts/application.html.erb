@@ -6,19 +6,10 @@
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-   <!-- Temporary style for explorify#index -->
-   <style>
-      html {  height: 100% }
-      body { height: 100%; margin: 0; padding: 0 }
-      #map-canvas { height: 100%;
-                    width: 50%; }
-   </style>
 </head>
 <body>
-  <div class="container">
 
     <%= yield %>
 
-  </div>
 </body>
 </html>
