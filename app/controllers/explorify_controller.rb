@@ -2,7 +2,10 @@ class ExplorifyController < ApplicationController
   def index
   end
 
-  def create
+  def new 
+  end
+
+  def create  
   end
 
   def show

@@ -17,5 +17,6 @@ Rails.application.routes.draw do
   resources :passwords
   resources :users
   resources :explorify
+  resources :trips
 
 end
