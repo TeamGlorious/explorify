@@ -5,7 +5,10 @@ GOOGLE_KEY = ENV["GOOGLE_KEY"]
 
   end
 
-  def create
+  def new 
+  end
+
+  def create  
   end
 
   def show
