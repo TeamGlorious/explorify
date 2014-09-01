@@ -2,7 +2,14 @@ class ExplorifyController < ApplicationController
   def index
   end
 
+  def new 
+  end
+
   def create
+    @explorify = 
+    @date_start = params[:date_start]
+    @date_end = params[:date_end]
+    redirect_to 
   end
 
   def show
