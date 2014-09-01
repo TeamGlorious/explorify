@@ -5,6 +5,7 @@ class CreateMedia < ActiveRecord::Migration
       t.string :thumnail
       t.string :location
       t.string :date_taken
+      t.references :trip
 
       t.timestamps
     end

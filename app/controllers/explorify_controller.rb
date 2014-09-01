@@ -5,8 +5,7 @@ class ExplorifyController < ApplicationController
   def new 
   end
 
-  def create
-    @explorify = 
+  def create  
     @date_start = params[:date_start]
     @date_end = params[:date_end]
     redirect_to 
