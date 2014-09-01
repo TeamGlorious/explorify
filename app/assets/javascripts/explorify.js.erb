@@ -14,17 +14,21 @@ function addMarkers(bounds, map){
   for (var i = 0, travelPoints = []; i < coordinates.length; i++){
     var mapBoundary = new google.maps.LatLng(coordinates[i][0], coordinates[i][1]);
     travelPoints.push(new google.maps.LatLng(coordinates[i][0], coordinates[i][1]));
+    image = new google.maps.MarkerImage("<%= asset_path('pin.png') %>");
+    image.anchor = new google.maps.Point(12, 53);
 
     var iterate = 0;
     setTimeout(function(){
+
       new google.maps.Marker({
         position: travelPoints[iterate],
         map: map,
         draggable: false,
-        animation: google.maps.Animation.DROP
+        animation: google.maps.Animation.DROP,
+        icon: image
       });
       iterate++;
-    }, i * 800);
+    }, i * (800 / i));
 
     bounds.extend(mapBoundary); // zoom boundary
   }
