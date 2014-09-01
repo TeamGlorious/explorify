@@ -1,5 +1,5 @@
-var coordinates = [[37.2,-122.2],[37.3,-121.8],[37.5,-122.1]];
-
+var coordinates = [[37.2,-122.2],[15.3,-90.8],[40.5,-100.1],[35.6672,-105.9644],[37.2,-122.2]];
+var markers = [];
 
 function initialize(){
   // var to define boundary of all coordinates
@@ -20,15 +20,23 @@ function addMarkers(bounds, map){
     var iterate = 0;
     setTimeout(function(){
 
-      new google.maps.Marker({
+      markers.push(new google.maps.Marker({
         position: travelPoints[iterate],
         map: map,
         draggable: false,
         animation: google.maps.Animation.DROP,
         icon: image
+      }));
+       var line = new google.maps.Polyline({
+         geodesic: true,
+         path: [travelPoints[iterate], travelPoints[iterate+1]],
+         strokeColor:"#009bf5",
+         strokeOpacity:0.9,
+         strokeWeight:2,
+         map: map
       });
       iterate++;
-    }, i * (800 / i));
+    }, (i+3) * 400);
 
     bounds.extend(mapBoundary); // zoom boundary
   }
@@ -38,8 +46,10 @@ function addMarkers(bounds, map){
 // Creates javascript tags and calls initialize function
 function loadScript() {
   var script = document.createElement('script');
-  var KEY = 'AIzaSyAxM-N66aK2aCq0yhxQrJJZMh-XYcEauUk&';
-  script.src = 'https://maps.googleapis.com/maps/api/js?key=' + KEY + 'callback=initialize';
+  // var key = Rails.application.secrets.google_key;
+  var key = 'AIzaSyAxM-N66aK2aCq0yhxQrJJZMh-XYcEauUk&';
+
+  script.src = 'https://maps.googleapis.com/maps/api/js?key=' + key + 'callback=initialize';
   document.body.appendChild(script);
 }
 
