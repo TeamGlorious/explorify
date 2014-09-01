@@ -3,14 +3,14 @@ class InstagramsController < ApplicationController
   CALLBACK_URL = "http://localhost:3000/instagrams/callback"
   CLIENT_ID = ENV["INSTAGRAM_CLIENT_ID"]
   CLIENT_SECRET = ENV["INSTAGRAM_CLIENT_SECRET"]
-  
+
   def new
     @url = "https://api.instagram.com/oauth/authorize/?client_id=#{CLIENT_ID}&redirect_uri=#{CALLBACK_URL}&response_type=code"
     # binding.pry
   end
 
   def show
-    code = params[:code]  
+    code = params[:code]
     request = Typhoeus::Request.new(
       "https://api.instagram.com/oauth/access_token",
       method: :post,
