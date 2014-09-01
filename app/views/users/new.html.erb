@@ -1,8 +1,6 @@
-<%= form_for @user do |f| %>
-  <%= f.text_field :name, placeholder: "User name" %>
-  <%= f.text_field :email, placeholder: "email" %>
-  <%= f.text_field :email, placeholder: "email validation" %>
-  <%= f.password_field :password, placeholder: "password" %>
-  <%= f.password_field :password_confirmation, palceholder: "password confirmation" %>
-  <%= f.submit "Create new account" %>
-<% end %>
+<%= render partial: "shared/center_col_header" %>
+  <h2 class="text-center">Create new account</h2><br>
+  <div>
+    <%= render partial: "users_form", locals: {user: @user, button_text: "Create new account"} %>  
+  </div>
+<%= render partial: "shared/div_footer" %>
