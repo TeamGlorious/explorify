@@ -38,4 +38,10 @@ Rails.application.configure do
   # mailer
   config.action_mailer.delivery_method = :letter_opener
   config.action_mailer.default_url_options = {:host => "localhost: 3000"}
+
+  # Google map
+  config.assets.precompile += %w( explorify.js )
 end
+
+
+
