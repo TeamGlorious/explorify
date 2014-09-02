@@ -1,3 +1,7 @@
-<h1>Explorify</h1>
-<%= link_to "Sign up", new_user_path %>
-<%= link_to "Log in", login_path %>
+<%= render partial: "shared/center_col_header" %>
+<div class ="text-center">
+  <h1>Explorify</h1>
+  <%= link_to "Sign up", new_user_path %><br>
+  <%= link_to "Log in", login_path %>
+</div>
+<%= render partial: "shared/div_footer" %>

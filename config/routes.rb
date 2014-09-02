@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
 
   # sessions routes
-  get '/' => 'sessions#new'
-  post '/' => 'sessions#create'
-  root to: 'sessions#new'
+  get '/' => 'sites#index'
+  # post '/' => 'sessions#create'
+  root to: 'sites#index'
   get "/login" => "session#new"
   post "/login" => "session#create"
 
