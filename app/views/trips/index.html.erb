@@ -1,0 +1,15 @@
+<%= render partial: "shared/center_col_header" %>
+
+<h1 class="text-center">Previous Journeys</h1>
+<a href="/trips/new"><h3 class="text-center">Create a new journey!</h3></a><br>
+
+<% @trips.each do |trip| %>
+  <ul>
+    <h3><%= trip.title %></h3>
+    <li><%= trip.date_start %></li>
+    <li><%= trip.date_end %></li>
+    <li><%= trip.description %></li>
+  </ul><br>
+<% end %>
+
+<%= render partial: "shared/div_footer" %>
