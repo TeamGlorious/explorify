@@ -17,5 +17,13 @@ body { height: 100%; margin: 0; padding: 0 }
 
 #map-canvas { height: 720px; width: 685px; }
 
+.right-half {
+   position: fixed;
+   left: 800px;
+   top: 100px;
+   height: 730px;
+   width: 700px;
+
+}
 
 
