@@ -38,10 +38,14 @@ class TripsController < ApplicationController
     trip_attr = params.require(:trip).permit(:title, :description, :date_start, :date_end)
     @trip = current_user.trips.create(trip_attr)
     # binding.pry
-    redirect_to @trip
+    redirect_to edit_trip_path @trip[:id]
   end
 
   def show
+    
+  end
+
+  def edit
     access_token = session["access_token"]
     @trip = Trip.find_by_id(params[:id])
     if (@trip.date_start != nil && @trip.date_end != nil)
@@ -68,9 +72,6 @@ class TripsController < ApplicationController
       # image = MiniMagick::Image.open(media["images"]["thumbnail"]["url"])
       # binding.pry
     end
-  end
-
-  def edit
   end
 
   def update

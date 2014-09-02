@@ -11,9 +11,7 @@ Rails.application.routes.draw do
   get '/logout' => 'sessions#destroy'
 
   get '/trips/callback' => 'trips#authorize'
-  get '/instagrams/session' => 'instagrams#session'
 
-  resources :instagrams
   resources :passwords
   resources :users
   resources :explorify
