@@ -34,10 +34,74 @@ class TripsController < ApplicationController
   end
 
   def create
+    @results_arr = []
+    date_ranges = []
+    seven_days = 604800
+
+    access_token = session["access_token"]
+
     # binding.pry
     trip_attr = params.require(:trip).permit(:title, :description, :date_start, :date_end)
     @trip = current_user.trips.create(trip_attr)
+
+    #instagram will only return 7 day ranges per query
+    if (@trip.date_start != nil && @trip.date_end != nil)
+      date_start = @trip.date_start.to_time.to_i
+      date_end = @trip.date_end.to_time.to_i
+      date_span = date_end - date_start
+      while date_span > seven_days
+        date_ranges.push({date_start: date_start, date_end: date_start + seven_days})
+        date_start += seven_days
+        date_span -= seven_days
+      end
+      date_ranges.push({date_start: date_start, date_end: date_end})
+    end
+
+    # temporarily using Shawn's instagram id since he has more photos up there the rest of the team
+    shawn_id = 144837249
+
     # binding.pry
+    
+    date_ranges.each_with_index do |range, index|
+      if date_ranges.length > 1
+        params = {:access_token => access_token, :max_timestamp => date_ranges[index][:date_start], :min_timestamp => date_ranges[index][:date_end]}
+      else
+        params = {:access_token => access_token}
+      end
+      request = Typhoeus.get(
+        # this is the production url
+        # "https://api.instagram.com/v1/users/#{session['instagram_user_id']}/media/recent/",
+
+        # this is the Shawn specific url
+        "https://api.instagram.com/v1/users/#{shawn_id}/media/recent/",
+        :params => params
+      )
+      @results_arr.push JSON.parse(request.body)
+      
+    end
+    
+    # binding.pry
+    @results_arr.each do |results|
+      results["data"].each do |media|
+        media_new = @trip.medias.new
+        media_new.full_res_img = media["images"]["standard_resolution"]["url"]
+        media_new.thumbnail = media["images"]["thumbnail"]["url"]
+        if media["location"]
+          media_new.location = true
+          media_new.lat = media["location"]["lat"]
+          media_new.long = media["location"]["long"]
+        else
+          media_new.location = false
+        end
+        media_new.date_taken = DateTime.strptime(media["created_time"], '%s').to_s
+        # binding.pry
+        media_new.save
+      end
+    end
+
+    # image = MiniMagick::Image.open(media["images"]["thumbnail"]["url"])
+    # binding.pry
+
     redirect_to edit_trip_path @trip[:id]
   end
 
@@ -46,32 +110,8 @@ class TripsController < ApplicationController
   end
 
   def edit
-    access_token = session["access_token"]
     @trip = Trip.find_by_id(params[:id])
-    if (@trip.date_start != nil && @trip.date_end != nil)
-      date_start = @trip.date_start.to_time.to_i
-      date_end = @trip.date_end.to_time.to_i
-      params = {:access_token => access_token, :max_timestamp => date_start, :min_timestamp => date_end}
-    else
-      params = {:access_token => @access_token}
-    end
-
-    shawn_id = 144837249
-
-    request = Typhoeus.get(
-      # "https://api.instagram.com/v1/users/#{session['instagram_user_id']}/media/recent/",
-      "https://api.instagram.com/v1/users/#{shawn_id}/media/recent/",
-      :params => params
-      )
-    # binding.pry
-    @results = JSON.parse(request.body)
-    @timestamps = []
-    @results["data"].each do |media|
-      require 'open-uri'
-
-      # image = MiniMagick::Image.open(media["images"]["thumbnail"]["url"])
-      # binding.pry
-    end
+    @medias = @trip.medias
   end
 
   def update
