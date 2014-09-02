@@ -13,6 +13,8 @@ require "sprockets/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+# ENV['PATH'] = "/usr/local/bin:#{ENV['PATH']}"
+
 module Explorify
   class Application < Rails::Application
     config.assets.paths << Rails.root.join("vendor","assets", "fonts")

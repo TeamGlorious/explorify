@@ -1,5 +1,7 @@
 class TripsController < ApplicationController
 
+  require 'open-uri'
+
   CALLBACK_URL = "http://localhost:3000/trips/callback"
   CLIENT_ID = ENV["INSTAGRAM_CLIENT_ID"]
   CLIENT_SECRET = ENV["INSTAGRAM_CLIENT_SECRET"]
@@ -59,6 +61,13 @@ class TripsController < ApplicationController
       )
     # binding.pry
     @results = JSON.parse(request.body)
+    @timestamps = []
+    @results["data"].each do |media|
+      require 'open-uri'
+
+      # image = MiniMagick::Image.open(media["images"]["thumbnail"]["url"])
+      # binding.pry
+    end
   end
 
   def edit
