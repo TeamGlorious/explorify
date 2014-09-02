@@ -1,12 +1,13 @@
 <%= render partial: "shared/center_col_header" %>
   <h2 class="text-center">Login</h2><br>
-  <div class="row">
+  <%= link_to "Sign up!", new_user_path, class: "text-center" %>
+  <div role="form" class="row"><br>
     <!-- <div class="form-horizontal"> -->
-      <div class="input-group">
+      <div class="form-group-horizontal">
         <%= form_for :user do |f| %>
           <%= f.text_field :email, placeholder: "email", class: "form-control", autofocus: true %>
           <%= f.password_field :password, placeholder: "password", class: "form-control" %>
-          <span class="input-group-btn"><%= f.submit "Go", class: "btn btn-default", type: "button" %></span>
+          <%= f.submit "Go", class: "btn btn-default form-control" %>
         <% end %>
       </div>
     <!-- </div> -->

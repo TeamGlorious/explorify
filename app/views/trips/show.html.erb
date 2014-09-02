@@ -1,0 +1,11 @@
+<h1><%= @trip.title %></h1>
+<p><%= @trip.description %></p>
+<h3><%= @trip.date_start.to_time %> - <%= @trip.date_end.to_time %></h3>
+<% @results["data"].each do |media| %>
+  <img src="<%= media["images"]["thumbnail"]["url"] %>"><br>
+  <p>Location: <%= media["location"] %></p>
+  <p>Created at: <%= DateTime.strptime(media["created_time"],'%s') %></p>
+  <%# uri = URI.parse(media["images"]["thumbnail"]["url"]) %>
+  <p>DATE/TIME scraped <%=# EXIFR::JPEG.new(open(media["images"]["thumbnail"]["url"])).date_time %></p>
+  <%# binding.pry %>
+<% end %>

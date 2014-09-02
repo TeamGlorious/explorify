@@ -9,7 +9,7 @@ class SessionsController < ApplicationController
 
     if @user
       session[:user_id] = @user.id
-      redirect_to users_path, :notice => "You've logged in!"
+      redirect_to @user, :notice => "You've logged in!"
     else
       render :new
     end
@@ -17,6 +17,7 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:user_id] = nil
+    session["access_token"] = nil
     redirect_to root_path
   end
 end
