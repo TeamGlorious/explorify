@@ -10,13 +10,15 @@ Rails.application.routes.draw do
   delete '/logout' => 'sessions#destroy'
   get '/logout' => 'sessions#destroy'
 
-  get '/instagrams/callback' => 'instagrams#show'
+  get '/trips/callback' => 'trips#authorize'
   get '/instagrams/session' => 'instagrams#session'
 
   resources :instagrams
   resources :passwords
   resources :users
   resources :explorify
-  resources :trips
+  resources :trips do
+    resources :medias
+  end
 
 end
