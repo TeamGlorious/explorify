@@ -1,3 +1,5 @@
+<%= render partial: "shared/center_col_header" %>
+
 <h1><%= @trip.title %></h1>
 <p><%= @trip.description %></p>
 <h3><%= @trip.date_start.to_time %> - <%= @trip.date_end.to_time %></h3>
@@ -9,3 +11,6 @@
 
     
 <% end %>  
+
+
+<%= render partial: "shared/div_footer" %>
