@@ -3,7 +3,16 @@ var markers = [];
 
 function initialize(){
   // var to define boundary of all coordinates
-  var mapOptions = { mapTypeId: google.maps.MapTypeId.TERRAIN };
+  var mapOptions = {
+    mapTypeId: google.maps.MapTypeId.TERRAIN,
+    styles: [{"featureType":"landscape",
+              "stylers":[{"lightness":16},{"hue":"#ff001a"},{"saturation":-61}]},
+              {"featureType":"road.highway","stylers":[{"hue":"#ff0011"},{"lightness":53}]},
+              {"featureType":"poi.park","stylers":[{"hue":"#00ff91"}]},
+              {"elementType":"labels","stylers":[{"lightness":63},{"hue":"#ff0000"}]},
+              {"featureType":"road","elementType":"labels","stylers":[{"visibility":"off"}]}
+              ]
+  };
   var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
   var bounds = new google.maps.LatLngBounds();
   addMarkers(bounds, map);
@@ -30,9 +39,9 @@ function addMarkers(bounds, map){
        var line = new google.maps.Polyline({
          geodesic: true,
          path: [travelPoints[iterate], travelPoints[iterate+1]],
-         strokeColor:"#009bf5",
-         strokeOpacity:0.9,
-         strokeWeight:2,
+         strokeColor:"#36a657",
+         strokeOpacity:0.7,
+         strokeWeight:3,
          map: map
       });
       iterate++;
@@ -46,9 +55,9 @@ function addMarkers(bounds, map){
 // Creates javascript tags and calls initialize function
 function loadScript() {
   var script = document.createElement('script');
-  // var key = Rails.application.secrets.google_key;
   var key = 'AIzaSyAxM-N66aK2aCq0yhxQrJJZMh-XYcEauUk&';
-
+  // var key = Rails.application.secrets.google_key;
+  // var key = ENV["GOOGLE_KEY"];
   script.src = 'https://maps.googleapis.com/maps/api/js?key=' + key + 'callback=initialize';
   document.body.appendChild(script);
 }
