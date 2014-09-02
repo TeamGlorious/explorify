@@ -5,6 +5,7 @@
   <img src="<%= media["images"]["thumbnail"]["url"] %>"><br>
   <p>Location: <%= media["location"] %></p>
   <p>Created at: <%= DateTime.strptime(media["created_time"],'%s') %></p>
-  <p>DATE/TIME scraped <%=# EXIFR::JPEG.new(media["images"]["thumbnail"]["url"]).date_time %></p>
+  <%# uri = URI.parse(media["images"]["thumbnail"]["url"]) %>
+  <p>DATE/TIME scraped <%=# EXIFR::JPEG.new(open(media["images"]["thumbnail"]["url"])).date_time %></p>
   <%# binding.pry %>
 <% end %>
