@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 20140901213227) do
     t.string   "thumnail"
     t.string   "location"
     t.string   "date_taken"
+    t.integer  "trip_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
