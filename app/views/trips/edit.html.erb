@@ -1,0 +1,16 @@
+<%= render partial: "shared/center_col_header" %>
+
+<h1><%= @trip.title %></h1>
+<p><%= @trip.description %></p>
+<h3><%= @trip.date_start.to_time %> - <%= @trip.date_end.to_time %></h3>
+<% @results["data"].each do |media| %>
+  <img src="<%= media["images"]["thumbnail"]["url"] %>"><br>
+  <p>Location: <%= media["location"] %></p>
+  <p>Created at: <%= DateTime.strptime(media["created_time"],'%s') %></p>
+  <%# open(media["images"]["thumbnail"]["url"]) do |file| %>
+
+    
+<% end %>  
+
+
+<%= render partial: "shared/div_footer" %>
