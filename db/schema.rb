@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 20140902215224) do
     t.string   "lat"
     t.string   "long"
     t.string   "date_taken"
+    t.integer  "trip_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
