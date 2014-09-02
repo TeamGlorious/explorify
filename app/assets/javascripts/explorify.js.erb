@@ -56,7 +56,7 @@ function addMarkers(bounds, map){
 function loadScript() {
   var GOOGLE_KEY = "<%= Rails.application.secrets.google_key %>";
   var script = document.createElement('script');
-  script.src = 'https://maps.googleapis.com/maps/api/js?key=' + GOOGLE_KEY + 'callback=initialize';
+  script.src = 'https://maps.googleapis.com/maps/api/js?key=' + GOOGLE_KEY + '&callback=initialize';
   document.body.appendChild(script);
 }
 
