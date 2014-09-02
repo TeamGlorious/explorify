@@ -54,11 +54,9 @@ function addMarkers(bounds, map){
 
 // Creates javascript tags and calls initialize function
 function loadScript() {
+  var GOOGLE_KEY = "<%= Rails.application.secrets.google_key %>";
   var script = document.createElement('script');
-  var key = 'AIzaSyAxM-N66aK2aCq0yhxQrJJZMh-XYcEauUk&';
-  // var key = Rails.application.secrets.google_key;
-  // var key = ENV["GOOGLE_KEY"];
-  script.src = 'https://maps.googleapis.com/maps/api/js?key=' + key + 'callback=initialize';
+  script.src = 'https://maps.googleapis.com/maps/api/js?key=' + GOOGLE_KEY + 'callback=initialize';
   document.body.appendChild(script);
 }
 

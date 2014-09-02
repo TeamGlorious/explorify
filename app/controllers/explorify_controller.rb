@@ -1,14 +1,14 @@
 class ExplorifyController < ApplicationController
-GOOGLE_KEY = ENV["GOOGLE_KEY"]
+  GOOGLE_KEY = "<%= Rails.application.secrets.google_key %>";
 
   def index
 
   end
 
-  def new 
+  def new
   end
 
-  def create  
+  def create
   end
 
   def show
