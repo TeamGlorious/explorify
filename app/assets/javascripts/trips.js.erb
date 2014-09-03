@@ -11,7 +11,6 @@ var coordinates = [[37.2,-122.2],[15.3,-90.8],[40.5,-100.1],[35.6672,-105.9644],
 var travelPoints = [];// Will hold google processed coordinates data
 var markers = [];
 
-
 function initialize(){
   var mapOptions = {
     // Skin
@@ -39,12 +38,12 @@ function initialize(){
   // Listen for search event
   google.maps.event.addListener(searchBox, 'places_changed', function(){
     var places = searchBox.getPlaces();
-    travelPoints.push(places[0].geometry.location);
+    var place = places[0];
+    travelPoints.push(place.geometry.location);
     // Update Marker draw
     autoMarkers(bounds, map);
     map.fitBounds(bounds);
   });
-
 }
 
 // convert coordinates into google.map objects
@@ -56,29 +55,41 @@ var mapPoints = function(){
 
 // Draw markers with delay animation
 function autoMarkers(bounds, map){
-  for (var i = 0, iterate = 0; i < travelPoints.length; i++){
+  for (var i = 0, iterate = 0, x = i+1; i < travelPoints.length; i++){
     image = new google.maps.MarkerImage("<%= asset_path('pin.png') %>");
     image.anchor = new google.maps.Point(12, 53);
     setTimeout(function(){
-      markers.push(new google.maps.Marker({
+      marker = new google.maps.Marker({
         position: travelPoints[iterate],
         map: map,
         draggable: true,
         animation: google.maps.Animation.DROP,
         icon: image
-      }));
-       var line = new google.maps.Polyline({
-         geodesic: true,
-         path: [travelPoints[iterate], travelPoints[iterate+1]],
-         strokeColor:"#36a657",
-         strokeOpacity:0.7,
-         strokeWeight:3,
-         map: map
+      });
+      var line = new google.maps.Polyline({
+        geodesic: true,
+        path: [travelPoints[iterate], travelPoints[iterate+1]],
+        strokeColor:"#36a657",
+        strokeOpacity:0.7,
+        strokeWeight:3,
+        map: map
       });
       iterate++;
+    marker.setTitle("Marker");
+    markerMessage(map, marker, i);
     }, (i+3) * 200);
+
     bounds.extend(travelPoints[i]); // zoom boundary
   }
+}
+
+function markerMessage(map, marker, num) {
+  var infowindow = new google.maps.InfoWindow({
+    content: 'Test Info'
+  });
+  google.maps.event.addListener(marker, 'click', function() {
+    infowindow.open(marker.get('map'), marker);
+  });
 }
 
 
@@ -86,7 +97,7 @@ function autoMarkers(bounds, map){
 function loadScript() {
   var GOOGLE_KEY = "<%= Rails.application.secrets.google_key %>";
   var script = document.createElement('script');
-  script.src = 'https://maps.googleapis.com/maps/api/js?key=' + GOOGLE_KEY + '&libraries=places&callback=initialize';
+  script.src = 'https://maps.googleapis.com/maps/api/js?key=' + GOOGLE_KEY + '&sensor=true&libraries=places&callback=initialize';
   document.body.appendChild(script);
 }
 
