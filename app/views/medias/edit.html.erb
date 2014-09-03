@@ -1,0 +1,15 @@
+<%= render partial: "shared/center_col_header" %>
+
+<img src="<%= @media.thumbnail %>"><br>
+<p>Created at: <%= @media.date_taken %></p>
+<div class="form-group">
+  <%= form_for [@trip, @media] do |f| %>
+    <%= f.text_field :lat, placeholder: "latitude", class: "form-control" %>
+    <%= f.text_field :long, placeholder: "longitude", class: "form-control" %>
+    <%= f.date_field :date_taken, placeholder: "Date taken", class: "form-control" %>
+    <%= f.submit "Save changes", class: "btn btn-default" %>
+  <% end %>
+</div>
+<%= button_to "Delete", trip_media_path(@trip, @media), method: :delete, class: "btn btn-default" %>
+
+<%= render partial: "shared/div_footer" %>
