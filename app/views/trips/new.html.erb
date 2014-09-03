@@ -1,8 +1,8 @@
 <%= render partial: "shared/center_col_header" %>
 
   <% if session["access_token"] != nil %>
-  <%# binding.pry %>
-    <h2 class="text-center">Thank you.</h2>  
+  <% binding.pry %>
+    <h2 class="text-center">Thank you.</h2>
     <h3 class="text-center">Please enter your trip details:</h3><br>
     <%= render partial: "trip_form", locals: {trip: @trip, button_text: "Go!"} %>
   <% else %>
@@ -10,3 +10,4 @@
   <% end %>
 
 <%= render partial: "shared/div_footer" %>
+
