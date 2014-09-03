@@ -16,7 +16,7 @@ class TripsController < ApplicationController
   end
 
   def authorize
-    code = params[:code]  
+    code = params[:code]
     request = Typhoeus::Request.new(
       "https://api.instagram.com/oauth/access_token",
       method: :post,
@@ -61,7 +61,7 @@ class TripsController < ApplicationController
     shawn_id = 144837249
 
     # binding.pry
-    
+
     date_ranges.each_with_index do |range, index|
       if date_ranges.length > 1
         params = {:access_token => access_token, :max_timestamp => date_ranges[index][:date_start], :min_timestamp => date_ranges[index][:date_end]}
@@ -77,12 +77,12 @@ class TripsController < ApplicationController
         :params => params
       )
       @results_arr.push JSON.parse(request.body)
-      
+
     end
-    
+
     # binding.pry
     @results_arr.each do |results|
-      binding.pry
+      # binding.pry
       results["data"].each do |media|
         media_new = @trip.medias.new
         media_new.full_res_img = media["images"]["standard_resolution"]["url"]
@@ -107,7 +107,7 @@ class TripsController < ApplicationController
   end
 
   def show
-    
+
   end
 
   def edit
