@@ -28,7 +28,9 @@ body { height: 100%; margin: 0; padding: 0 }
    top: 100px;
    height: 700px;
    width: 700px;
-   z-index: 10;
 }
 
+#search-maps {
+   color: black;
+}
 
