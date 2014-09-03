@@ -6,7 +6,7 @@ class CreateMediaTable < ActiveRecord::Migration
       t.string :med_res_img
       t.string :thumbnail
       t.float :lat
-      t.float :long
+      t.float :lng
       t.string :date_taken
 
       t.timestamps
