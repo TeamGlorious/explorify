@@ -13,7 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require "bootstrap.min"
-//= require "datepicker-1.3.0"
 //= require turbolinks
 //= require_tree .
 
