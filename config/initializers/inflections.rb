@@ -14,3 +14,15 @@
 # ActiveSupport::Inflector.inflections(:en) do |inflect|
 #   inflect.acronym 'RESTful'
 # end
+
+ActiveSupport::Inflector.inflections do |inflect|
+  # inflect.irregular 'medium', 'media'
+  # inflect.irregular 'media', 'medias'
+    inflect.uncountable "media"
+end
+
+#medium - tecnically singular
+# media - technically plural
+
+#media - singular
+#medias - plural

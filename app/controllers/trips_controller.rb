@@ -49,54 +49,48 @@ class TripsController < ApplicationController
 
   def create
     @results_arr = []
-    date_ranges = []
-    seven_days = 604800
+    # Unix time 8 weeks
+    two_months = 4838400
 
     access_token = session["access_token"]
 
-    binding.pry
     trip_attr = params.require(:trip).permit(:title, :description, :date_start, :date_end)
     @trip = current_user.trips.create(trip_attr)
 
-    #instagram will only return 7 day ranges per query
-    if (@trip.date_start != nil && @trip.date_end != nil)
-      date_start = @trip.date_start.to_time.to_i
-      date_end = @trip.date_end.to_time.to_i
-      date_span = date_end - date_start
-      while date_span > seven_days
-        date_ranges.push({date_start: date_start, date_end: date_start + seven_days})
-        date_start += seven_days
-        date_span -= seven_days
-      end
-      date_ranges.push({date_start: date_start, date_end: date_end})
-    end
-
-    # temporarily using Shawn's instagram id since he has more photos up there the rest of the team
+    # temporarily using other student's instagram id since they have more photos than I do
     shawn_id = 144837249
+    steph_id = 198234099
+    palmer_id = 18145159
 
-    # binding.pry
-
-    date_ranges.each_with_index do |range, index|
-      if date_ranges.length > 1
-        params = {:access_token => access_token, :max_timestamp => date_ranges[index][:date_start], :min_timestamp => date_ranges[index][:date_end]}
-      else
-        params = {:access_token => access_token}
-      end
+    if @trip.date_start != "" && @trip.date_end != ""
+      date_start = Date.parse(@trip.date_start).to_time.to_i
+      date_end = Date.parse(@trip.date_end).to_time.to_i
+    else
+      date_end = DateTime.now.to_time.to_i
+      date_start = date_end - two_months
+    end
+    
+    # Instagram has a hard cap of 33 media returned per query.
+    # This loop does multiple queries to get all of the media during a time frame
+    length = 33
+    while length >= 33
+      params = {:access_token => access_token, :count => 100, :min_timestamp => date_start, :max_timestamp => date_end}
       request = Typhoeus.get(
         # this is the production url
         # "https://api.instagram.com/v1/users/#{session['instagram_user_id']}/media/recent/",
 
         # this is the Shawn specific url
-        "https://api.instagram.com/v1/users/#{shawn_id}/media/recent/",
+        "https://api.instagram.com/v1/users/#{palmer_id}/media/recent/",
         :params => params
       )
-      @results_arr.push JSON.parse(request.body)
-
+      results = JSON.parse(request.body)
+      length = results["data"].length
+      # Use the last returned media object's timestamp as the new date_end for time range
+      date_end = results["data"][-1]["created_time"].to_i - 1
+      @results_arr.push results
     end
-
-    # binding.pry
+  
     @results_arr.each do |results|
-      # binding.pry
       results["data"].each do |media|
         media_new = @trip.medias.new
         media_new.full_res_img = media["images"]["standard_resolution"]["url"]
