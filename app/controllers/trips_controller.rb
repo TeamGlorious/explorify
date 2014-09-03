@@ -82,7 +82,7 @@ class TripsController < ApplicationController
     
     # binding.pry
     @results_arr.each do |results|
-      binding.pry
+      # binding.pry
       results["data"].each do |media|
         media_new = @trip.medias.new
         media_new.full_res_img = media["images"]["standard_resolution"]["url"]
