@@ -7,7 +7,21 @@ class TripsController < ApplicationController
   CLIENT_SECRET = ENV["INSTAGRAM_CLIENT_SECRET"]
 
   def index
+    @trips_arr = []
     @trips = Trip.all
+
+    # this populates the trip index with a random image from it's media
+    @trips.each do |trip|
+      new_trip = {}
+      new_trip["trip"] = trip
+      if trip.medias.length > 0
+        medias = trip.medias
+        media = medias[rand(0..(medias.length - 1))]["thumbnail"]
+        new_trip["rand_img"] = media
+      end
+      @trips_arr.push new_trip
+      # binding.pry
+    end
   end
 
   def new
@@ -40,7 +54,7 @@ class TripsController < ApplicationController
 
     access_token = session["access_token"]
 
-    # binding.pry
+    binding.pry
     trip_attr = params.require(:trip).permit(:title, :description, :date_start, :date_end)
     @trip = current_user.trips.create(trip_attr)
 
