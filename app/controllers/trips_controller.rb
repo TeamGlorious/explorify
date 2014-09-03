@@ -82,14 +82,15 @@ class TripsController < ApplicationController
     
     # binding.pry
     @results_arr.each do |results|
+      binding.pry
       results["data"].each do |media|
         media_new = @trip.medias.new
         media_new.full_res_img = media["images"]["standard_resolution"]["url"]
         media_new.thumbnail = media["images"]["thumbnail"]["url"]
         if media["location"]
           media_new.location = true
-          media_new.lat = media["location"]["lat"]
-          media_new.long = media["location"]["long"]
+          media_new.lat = media["location"]["latitude"]
+          media_new.long = media["location"]["longitude"]
         else
           media_new.location = false
         end
