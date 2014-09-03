@@ -3,12 +3,16 @@
 <h1 class="text-center">Previous Journeys</h1>
 <a href="/trips/new"><h3 class="text-center">Create a new journey!</h3></a><br>
 
-<% @trips.each do |trip| %>
+<% @trips_arr.each do |trip| %>
   <ul>
-    <h3><%= trip.title %></h3>
-    <li><%= trip.date_start %></li>
-    <li><%= trip.date_end %></li>
-    <li><%= trip.description %></li>
+    <h3><%= trip["trip"].title %></h3>
+    <li><%= trip["trip"].date_start %></li>
+    <li><%= trip["trip"].date_end %></li>
+    <li><%= trip["trip"].description %></li>
+    <% if trip["rand_img"] %>
+    <!-- random image from media for this trip -->
+      <li><img src ="<%= trip['rand_img'] %>"</li>
+    <% end %>
   </ul><br>
 <% end %>
 
