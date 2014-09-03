@@ -23,7 +23,7 @@ body { height: 100%; margin: 0; padding: 0 }
 }
 
 .right-half {
-   position: fixed
+   position: fixed;
    left: 800px;
    top: 100px;
    height: 700px;
