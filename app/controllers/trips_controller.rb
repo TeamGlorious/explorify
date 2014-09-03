@@ -102,11 +102,11 @@ class TripsController < ApplicationController
         media_new.full_res_img = media["images"]["standard_resolution"]["url"]
         media_new.thumbnail = media["images"]["thumbnail"]["url"]
         if media["location"]
-          media_new.location = true
+          # media_new.location = true
           media_new.lat = media["location"]["latitude"]
           media_new.long = media["location"]["longitude"]
-        else
-          media_new.location = false
+        # else
+        #   media_new.location = false
         end
         media_new.date_taken = DateTime.strptime(media["created_time"], '%s').to_s
         # binding.pry

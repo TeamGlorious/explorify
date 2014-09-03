@@ -19,10 +19,10 @@ ActiveRecord::Schema.define(version: 20140902215224) do
   create_table "media", force: true do |t|
     t.integer  "trip_id"
     t.string   "full_res_img"
+    t.string   "med_res_img"
     t.string   "thumbnail"
-    t.boolean  "location"
-    t.string   "lat"
-    t.string   "long"
+    t.float    "lat"
+    t.float    "long"
     t.string   "date_taken"
     t.datetime "created_at"
     t.datetime "updated_at"
