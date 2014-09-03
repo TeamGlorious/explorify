@@ -119,5 +119,27 @@ class TripsController < ApplicationController
   end
 
   def destroy
+    @trip = Trip.find_by_id(params[:id])
+    @user = User.find_by_id(@trip.user_id)
+    medias = @trip.medias
+    medias.each do |media|
+      media.destroy
+    end
+    @trip.destroy
+
+    redirect_to @user
   end
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
