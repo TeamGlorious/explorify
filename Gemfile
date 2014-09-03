@@ -27,12 +27,6 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'typhoeus'
 
-# image metadata reader
-gem 'exifr', '~> 1.1.3'
-
-# MiniMagick - for reading image metadata
-gem 'mini_magick'
-
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 group :development do
   gem 'spring'

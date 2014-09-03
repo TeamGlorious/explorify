@@ -22,7 +22,7 @@ ActiveRecord::Schema.define(version: 20140902215224) do
     t.string   "med_res_img"
     t.string   "thumbnail"
     t.float    "lat"
-    t.float    "long"
+    t.float    "lng"
     t.string   "date_taken"
     t.datetime "created_at"
     t.datetime "updated_at"
