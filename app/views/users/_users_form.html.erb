@@ -1,11 +1,14 @@
 <div class="form-horizontal">
+
+  <%= render partial: "shared/flash" %>
+  
   <%= form_for user do |f| %>  
     <div class="form-group">
       <%= f.text_field :name, placeholder: "Username", class: "form-control", autofocus: true %>
       <%= f.text_field :email, placeholder: "email", class: "form-control" %>
-      <%= f.text_field :email, placeholder: "email validation", class: "form-control" %>
+      <%= f.text_field :email_confirmation, placeholder: "email validation", class: "form-control" %>
       <%= f.password_field :password, placeholder: "password", class: "form-control" %>
-      <%= f.password_field :password, placeholder: "password validation", class: "form-control" %>
+      <%= f.password_field :password_confirmation, placeholder: "password validation", class: "form-control" %>
       <%= f.submit button_text, class: "btn btn-default" %>
     </div>
   <% end %>

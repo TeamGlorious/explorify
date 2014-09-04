@@ -54,8 +54,7 @@ class TripsController < ApplicationController
   end
 
   def create
-    # and the tide began to rise.  Lots of stuff happening in this method.
-
+    
     @results_arr = []
     # Unix time 8 weeks
     two_months = 4838400
@@ -63,75 +62,102 @@ class TripsController < ApplicationController
     access_token = session["access_token"]
 
     trip_attr = params.require(:trip).permit(:title, :description, :date_start, :date_end)
-    @trip = current_user.trips.create(trip_attr)
 
-    # temporarily using other student's instagram id since they have more photos than I do
-    shawn_id = 144837249
-    steph_id = 198234099
-    palmer_id = 18145159
-
-
-    if @trip.date_start != "" && @trip.date_end != ""
-      # limit searches to four months
-      date_start = Date.parse(@trip.date_start).to_time.to_i
-      date_end = Date.parse(@trip.date_end).to_time.to_i
-      # if date_end - date_start > two_months * 2
-      #   date_start = date_end - (two_months * 2)
-      # end
-    else
-      # instagram allows no date range, but I've limited this to a four month period.
-      date_end = DateTime.now.to_time.to_i
-      date_start = date_end - two_months * 2
+    # check for validations and other checks
+    if params[:title] == ""
+      flash.now[:notice] = "No title given"
     end
-    
-    # Instagram has a hard cap of 33 media returned per query.
-    # This loop does multiple queries to get all of the media during a time frame
-    length = 33
-    while length >= 33
-      params = {:access_token => access_token, :count => 100, :min_timestamp => date_start, :max_timestamp => date_end}
-      request = Typhoeus.get(
-        # this is the production url
-        # "https://api.instagram.com/v1/users/#{session['instagram_user_id']}/media/recent/",
 
-        # this is the Shawn specific url
-        "https://api.instagram.com/v1/users/#{shawn_id}/media/recent/",
-        :params => params
-      )
-      query_results = JSON.parse(request.body)
-      # binding.pry
-      if (query_results["data"].length > 0)
-        length = query_results["data"].length
-        # Use the last returned media object's timestamp as the new date_end for time range
-        date_end = query_results["data"][-1]["created_time"].to_i - 1
-        @results_arr.push query_results
+    if params[:description] == ""
+      flash.now[:notice] = "No description given"
+    end
+
+    if params[:date_start] == ""
+      flash.now[:notice] = "No start date specified"
+    end
+
+    if params[:date_end] == ""
+      flash.now[:notice] = "No end date specified"
+    end
+
+    if trip_attr[:date_start] != "" && trip_attr[:date_end] != "" && Date.parse(trip_attr[:date_start].to_time.to_i) > Date.parse(trip_attr[:date_end].to_time.to_i)
+      flash.now[:notice] = "Your start date is later than your end date"
+    end
+
+    if flash.count > 0
+      @trip = Trip.new(trip_attr)
+      render :new
+    else
+      @trip = current_user.trips.create(trip_attr)
+
+      # temporarily using other student's instagram id since they have more photos than I do
+      shawn_id = 144837249
+      steph_id = 198234099
+      palmer_id = 18145159
+
+
+      if @trip.date_start != "" && @trip.date_end != ""
+        # limit searches to four months
+        date_start = Date.parse(@trip.date_start).to_time.to_i
+        date_end = Date.parse(@trip.date_end).to_time.to_i
+        # if date_end - date_start > two_months * 2
+        #   date_start = date_end - (two_months * 2)
+        # end
       else
-        length = 0
+        # instagram allows no date range, but I've limited this to a four month period.
+        date_end = DateTime.now.to_time.to_i
+        date_start = date_end - two_months * 2
       end
-  
-      # build each new media object
-      if @results_arr.length > 0
-        @results_arr.each do |results|
-          results["data"].each do |media|
-            media_new = @trip.medias.new
-            media_new.full_res_img = media["images"]["standard_resolution"]["url"]
-            media_new.med_res_img = media["images"]["low_resolution"]["url"]
-            media_new.thumbnail = media["images"]["thumbnail"]["url"]
-            if media["location"]
-              # media_new.location = true
-              media_new.lat = media["location"]["latitude"]
-              media_new.lng = media["location"]["longitude"]
-              media_new.date_taken = DateTime.strptime(media["created_time"], '%s').to_s
-              # moved this here so that only photos with location data are processed.  Temporary fix.
-              media_new.save
+      
+      # Instagram has a hard cap of 33 media returned per query.
+      # This loop does multiple queries to get all of the media during a time frame
+      length = 33
+      while length >= 33
+        params = {:access_token => access_token, :count => 100, :min_timestamp => date_start, :max_timestamp => date_end}
+        request = Typhoeus.get(
+          # this is the production url
+          # "https://api.instagram.com/v1/users/#{session['instagram_user_id']}/media/recent/",
+
+          # this is the Shawn specific url
+          "https://api.instagram.com/v1/users/#{shawn_id}/media/recent/",
+          :params => params
+        )
+        query_results = JSON.parse(request.body)
+        # binding.pry
+        if (query_results["data"].length > 0)
+          length = query_results["data"].length
+          # Use the last returned media object's timestamp as the new date_end for time range
+          date_end = query_results["data"][-1]["created_time"].to_i - 1
+          @results_arr.push query_results
+        else
+          length = 0
+        end
+    
+        # build each new media object
+        if @results_arr.length > 0
+          @results_arr.each do |results|
+            results["data"].each do |media|
+              media_new = @trip.medias.new
+              media_new.full_res_img = media["images"]["standard_resolution"]["url"]
+              media_new.med_res_img = media["images"]["low_resolution"]["url"]
+              media_new.thumbnail = media["images"]["thumbnail"]["url"]
+              if media["location"]
+                # media_new.location = true
+                media_new.lat = media["location"]["latitude"]
+                media_new.lng = media["location"]["longitude"]
+                media_new.date_taken = DateTime.strptime(media["created_time"], '%s').to_s
+                # moved this here so that only photos with location data are processed.  Temporary fix.
+                media_new.save
+              end
             end
           end
         end
-      end
 
-    # image = MiniMagick::Image.open(media["images"]["thumbnail"]["url"])
-    # binding.pry
+      # image = MiniMagick::Image.open(media["images"]["thumbnail"]["url"])
+      # binding.pry
+      end
+      redirect_to edit_trip_path @trip[:id]
     end
-    redirect_to edit_trip_path @trip[:id]
   end
 
   def show
@@ -139,10 +165,10 @@ class TripsController < ApplicationController
   end
 
   def edit
-    if current_user && current_user[:id] == User.find_by_id(params[:id])
-      @trip = Trip.find_by_id(params[:id])
-    @medias = @trip.medias
-    @current_user = current_user  
+    @trip = Trip.find_by_id(params[:id])
+    if current_user && current_user[:id] == @trip.user_id
+      @medias = @trip.medias
+      @current_user = current_user  
     else
       redirect_to root_path
     end

@@ -1,5 +1,8 @@
 <p><%= @user.name %></p>
 <p><%= @user.email %></p>
+<% flash.each do |name, msg| %>
+  <%= content_tag :div, msg, class: "#{name} flash" %><br>
+<% end %><br>
 <p><img src= "<%= @user.img %>"></p>
 <% if @current_user && @current_user[:id] == @user.id %>
   <%= link_to "logout", logout_path %>
