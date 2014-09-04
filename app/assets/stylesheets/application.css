@@ -16,6 +16,10 @@
  *= require_self
  */
 
+ .spacer {
+  height: 50px;
+ }
+
 .admin {
 	background: #f0f;
 }
