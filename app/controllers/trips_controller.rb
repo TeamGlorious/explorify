@@ -135,7 +135,8 @@ class TripsController < ApplicationController
   end
 
   def show
-    @trip = Trip.find_by_id(params[:id])
+    @trip = Trip.find_by_id(4)
+    # @trip = Trip.find_by_id(params[:id])
     # @medias = @trip.medias
     # gon.trip = @trip
     # gon.media = @medias
