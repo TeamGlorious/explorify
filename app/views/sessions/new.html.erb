@@ -1,12 +1,25 @@
 <%= render partial: "shared/center_col_header" %>
 
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
    
 </head>
 <body class = "body-background">
   <div class="container">
+  <div class="row-centered">
+  <h2 class="text-center">Login</h2><br>
+  <%= link_to "Sign up!", new_user_path, class: "text-center" %>
+  <div role="form" class="row"><br>
+    <% flash.each do |name, msg| %>
+      <%= content_tag :div, msg, class: "#{name} flash" %><br>
+    <% end %><br>
+    <div class="form-group-horizontal">
+      <%= form_for @user, url: login_path do |f| %>
+        <%= f.text_field :email, placeholder: "email", class: "form-control", autofocus: true %>
+        <%= f.password_field :password, placeholder: "password", class: "form-control" %>
+        <%= f.submit "Go", class: "btn btn-default form-control" %>
+      <% end %>
   <div class="row">
   <div class="col-lg-4 col-lg-offset-4">
   <h1 class="text-center">Login</h1><br>
