@@ -119,6 +119,7 @@ function markerInfo(marker, i) {
 // Creates javascript tags and calls initialize function
 function loadScript() {
   var GOOGLE_KEY = "<%= Rails.application.secrets.google_key %>";
+  console.log(GOOGLE_KEY)
   var script = document.createElement('script');
   script.src = 'https://maps.googleapis.com/maps/api/js?key=' + GOOGLE_KEY + '&sensor=true&libraries=places&callback=initialize';
   document.body.appendChild(script);
