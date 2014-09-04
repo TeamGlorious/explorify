@@ -135,7 +135,8 @@ class TripsController < ApplicationController
   end
 
   def show
-    @media = Media.where(trip_id: 4).all
+    @media = Media.where(trip_id: params[:id]).all
+    # @trip = Trip.where(id: params[:id])
     gon.locations = @media
   end
 
