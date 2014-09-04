@@ -10,14 +10,8 @@ class UsersController < ApplicationController
 
   def create
     user_params = params.require(:user).permit(:name, :email, :email_confirmation, :password, :password_confirmation)
-    # @user = User.new(user_params)
     @user = User.create(user_params)
     invalid = "Invalid entry: "
-    # if @user.save
-    # else
-    #   binding.pry
-    #   flash.now[:notice] = "Activerecord error!"
-    # end
     
     if @user.errors.count > 0
       @user.errors.each do |key, value|
@@ -57,10 +51,25 @@ class UsersController < ApplicationController
   end
 
   def show
+    @trips_arr = []
     @user = User.find_by_id(params[:id])
+    @current_user = current_user
+    @trips = @user.trips
+
+    @trips.each do |trip|
+      new_trip = {}
+      new_trip["trip"] = trip
+      if trip.medias.length > 0
+        medias = trip.medias
+        media = medias[rand(0..(medias.length - 1))]["thumbnail"]
+        new_trip["rand_img"] = media
+      end
+      @trips_arr.push new_trip
+    end
     @current_user = current_user
   end
 
   def destroy
   end
 end
+
