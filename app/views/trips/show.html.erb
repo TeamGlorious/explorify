@@ -8,9 +8,9 @@
   <h3 style="font-style: italic;">Trip Display and Test Options</h3>
   <input id="search-maps" class="controls" type="text" placeholder="Search for location" style="z-index: 1;">
 
-<h2>Data</h2>
-<p style="color:black;"><%= @trip.inspect %></p>
-
+  <%= @media.each do |media| %>
+    <img src="<%= media.thumbnail %>">
+  <% end %>
 
 
 </div>

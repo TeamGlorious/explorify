@@ -6,14 +6,21 @@ $(document).on("ready", function() {
 
 
 // Maps *******************************
-// Raw coordinate data from Instagram
-var coordinates = [[37.2,-122.2],[15.3,-90.8],[40.5,-100.1],[35.6672,-105.9644]];
+var coordinates = [];
 var travelPoints = [];// Will hold google processed coordinates data
 var keyPhotos = [];
-var addPhoto = "<%= asset_path('balloonMarker.png') %>";
 var map;
 var bounds;
 var markers = [];
+
+// Raw coordinates from trip data
+for (var i = 0; i < gon.locations.length; i++){
+  coordinates.push([gon.locations[i].lat, gon.locations[i].lng]);
+}
+// Thumbnails from trip data
+for (var i = 0; i < gon.locations.length; i++){
+  keyPhotos.push(gon.locations[i].thumbnail);
+}
 
 
 function initialize(){
@@ -45,9 +52,8 @@ function initialize(){
     var places = searchBox.getPlaces();
     var place = places[0];
     travelPoints.push(place.geometry.location);
-    keyPhotos.push(addPhoto);
+    // Clear all marker data
     clearMarkers();
-    // markers = [];
     // Update Marker draw
     autoMarkers();
     map.fitBounds(bounds);
@@ -102,7 +108,7 @@ function autoMarkers(){
         });
       }
       markers[i].setTitle(i.toString());
-      keyPhotos.push(addPhoto);
+      // keyPhotos.push(addPhoto);
 
       markerInfo(markers[i], i);
       bounds.extend(travelPoints[i]);
