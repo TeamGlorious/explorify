@@ -10,7 +10,7 @@ $(document).on("ready", function() {
 var coordinates = [[37.2,-122.2],[15.3,-90.8],[40.5,-100.1],[35.6672,-105.9644],[37.2,-122.2]];
 var travelPoints = [];// Will hold google processed coordinates data
 var keyPhotos = [];
-var addPhoto = "<%= asset_path('pin.png') %>";
+var addPhoto = "<%= asset_path('balloonMarker.png') %>";
 var map;
 var bounds;
 
@@ -71,8 +71,8 @@ function autoMarkers(){
   };
 
   loop(travelPoints, 0, function(travelPoints, i, done){
-    markerImage = new google.maps.MarkerImage("<%= asset_path('pin.png') %>");
-    markerImage.anchor = new google.maps.Point(12, 53);
+    markerImage = new google.maps.MarkerImage("<%= asset_path('balloonMarker.png') %>");
+    markerImage.anchor = new google.maps.Point(20, 53);
 
     setTimeout(function(){
       marker = new google.maps.Marker({
