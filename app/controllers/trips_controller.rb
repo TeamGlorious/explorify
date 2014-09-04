@@ -68,11 +68,11 @@ class TripsController < ApplicationController
 
     if @trip.date_start != "" && @trip.date_end != ""
       # limit searches to four months
-      if date_end - date_start > two_months * 2
-        date_start = date_end - (two_months * 2)
-      end
       date_start = Date.parse(@trip.date_start).to_time.to_i
       date_end = Date.parse(@trip.date_end).to_time.to_i
+      # if date_end - date_start > two_months * 2
+      #   date_start = date_end - (two_months * 2)
+      # end
     else
       # instagram allows no date range, but I've limited this to a four month period.
       date_end = DateTime.now.to_time.to_i
@@ -93,36 +93,39 @@ class TripsController < ApplicationController
         :params => params
       )
       query_results = JSON.parse(request.body)
-      length = @query_results["data"].length
-      # Use the last returned media object's timestamp as the new date_end for time range
-      date_end = query_results["data"][-1]["created_time"].to_i - 1
-      @results_arr.push query_results
-    end
-  
-    # build each new media object
-    @results_arr.each do |results|
-      results["data"].each do |media|
-        media_new = @trip.medias.new
-        media_new.full_res_img = media["images"]["standard_resolution"]["url"]
-        media_new.thumbnail = media["images"]["thumbnail"]["url"]
-        if media["location"]
-          # media_new.location = true
-          media_new.lat = media["location"]["latitude"]
-          media_new.long = media["location"]["longitude"]
-          media_new.date_taken = DateTime.strptime(media["created_time"], '%s').to_s
-
-          # moved this here so that only photos with location data are processed.  Temporary fix.
-          media_new.save
-        else
-        #   media_new.location = false
-        end
-        
+      # binding.pry
+      if (query_results["data"].length > 0)
+        length = query_results["data"].length
+        # Use the last returned media object's timestamp as the new date_end for time range
+        date_end = query_results["data"][-1]["created_time"].to_i - 1
+        @results_arr.push query_results
+      else
+        length = 0
       end
-    end
+  
+      # build each new media object
+      if @results_arr.length > 0
+        @results_arr.each do |results|
+          results["data"].each do |media|
+            media_new = @trip.medias.new
+            media_new.full_res_img = media["images"]["standard_resolution"]["url"]
+            media_new.med_res_img = media["images"]["low_resolution"]["url"]
+            media_new.thumbnail = media["images"]["thumbnail"]["url"]
+            if media["location"]
+              # media_new.location = true
+              media_new.lat = media["location"]["latitude"]
+              media_new.lng = media["location"]["longitude"]
+              media_new.date_taken = DateTime.strptime(media["created_time"], '%s').to_s
+              # moved this here so that only photos with location data are processed.  Temporary fix.
+              media_new.save
+            end
+          end
+        end
+      end
 
     # image = MiniMagick::Image.open(media["images"]["thumbnail"]["url"])
     # binding.pry
-
+    end
     redirect_to edit_trip_path @trip[:id]
   end
 
@@ -150,13 +153,6 @@ class TripsController < ApplicationController
     redirect_to @user
   end
 end
-
-
-
-
-
-
-
 
 
 
