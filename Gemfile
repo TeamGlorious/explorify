@@ -41,10 +41,17 @@ group :development do
   gem 'pry'
   gem 'pry-rails'
   gem 'letter_opener'
+  # For storing keys in .env file
+  # gem 'dot-env'
 end
 
 group :development, :test do
+  gem 'dotenv-rails'
   gem 'rspec-rails', '~> 3.0.0'
+end
+
+group :production do
+  gem 'rails_12factor'
 end
 
 # Use ActiveModel has_secure_password

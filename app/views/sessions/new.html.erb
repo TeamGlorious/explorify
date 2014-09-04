@@ -1,4 +1,13 @@
 <%= render partial: "shared/center_col_header" %>
+
+<!DOCTYPE html>
+<html>
+<head>
+   
+</head>
+<body>
+  <div class="container">
+  <div class="row-centered">
   <h2 class="text-center">Login</h2><br>
   <%= link_to "Sign up!", new_user_path, class: "text-center" %>
   <div role="form" class="row"><br>
@@ -13,7 +22,14 @@
       <% end %>
     </div>
   </div>
+  </div>
+</div>
 
   <%= link_to "Forgot your password?", new_password_path   %>
+
+
+</body>
+</html>
+
 
 <%= render partial: "shared/div_footer" %>

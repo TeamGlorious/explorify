@@ -7,6 +7,15 @@
 <div class="right-half">
   <h3 style="font-style: italic;">Trip Display and Test Options</h3>
   <input id="search-maps" class="controls" type="text" placeholder="Search for location" style="z-index: 1;">
+  <h2> <%= @current_user %>, name of journey</h2>
+  <p style="color: black">Description of journey Explorify is a beautiful way to share the best <br> parts of your travels with friends and family.  Powered by Instagram, <br> we help you plot your best travel photos on a world map and model <br> the path you took during your trip.  Allow your friends and family to <br> enjoy your trips at their own convenience.</p>
+<p>
+
+</p>
+  <%= @media.each do |media| %>
+    <img src="<%= media.thumbnail %>">
+  <% end %>
+
 </div>
 
 
