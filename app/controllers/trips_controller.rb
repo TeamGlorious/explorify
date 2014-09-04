@@ -71,7 +71,7 @@ class TripsController < ApplicationController
       date_end = DateTime.now.to_time.to_i
       date_start = date_end - two_months
     end
-    
+
     # Instagram has a hard cap of 33 media returned per query.
     # This loop does multiple queries to get all of the media during a time frame
     length = 33
@@ -95,7 +95,7 @@ class TripsController < ApplicationController
       else
         length = 0
       end
-  
+
       # build each new media object
       if @results_arr.length > 0
         @results_arr.each do |results|
@@ -122,7 +122,11 @@ class TripsController < ApplicationController
   end
 
   def show
-
+    @trip = Trip.find_by_id(current_user.id)
+    # @trip = Trip.find_by_id(params[:id])
+    @medias = @trip.medias
+    gon.trip = @trip
+    gon.media = @medias
   end
 
   def edit
