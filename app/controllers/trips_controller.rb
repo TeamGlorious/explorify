@@ -28,7 +28,7 @@ class TripsController < ApplicationController
       # this is the url that asks the user to log into their instagram account for data access.  With callback url.
       @url = "https://api.instagram.com/oauth/authorize/?client_id=#{CLIENT_ID}&redirect_uri=#{CALLBACK_URL}&response_type=code"
       @trip = Trip.new
-    else 
+    else
       redirect_to trips_path
     end
   end
@@ -83,7 +83,7 @@ class TripsController < ApplicationController
       date_end = DateTime.now.to_time.to_i
       date_start = date_end - two_months * 2
     end
-    
+
     # Instagram has a hard cap of 33 media returned per query.
     # This loop does multiple queries to get all of the media during a time frame
     length = 33
@@ -107,7 +107,7 @@ class TripsController < ApplicationController
       else
         length = 0
       end
-  
+
       # build each new media object
       if @results_arr.length > 0
         @results_arr.each do |results|
@@ -135,14 +135,17 @@ class TripsController < ApplicationController
   end
 
   def show
-
+    @trip = Trip.find_by_id(params[:id])
+    # @medias = @trip.medias
+    # gon.trip = @trip
+    # gon.media = @medias
   end
 
   def edit
     if current_user && current_user[:id] == User.find_by_id(params[:id])
       @trip = Trip.find_by_id(params[:id])
     @medias = @trip.medias
-    @current_user = current_user  
+    @current_user = current_user
     else
       redirect_to root_path
     end

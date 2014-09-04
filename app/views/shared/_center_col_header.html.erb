@@ -21,10 +21,16 @@
                         <a href="#page-top"></a>
                     </li>
                     <li>
-                        <a href="/login">Sign in</a>
+                        <a href="#about">About</a>
                     </li>
                     <li>
-                        <a href="/users/new">Sign up</a>
+                        <a href="#cont">Contact</a>
+                    </li>
+                    <li>
+                        <a href="<%= login_path %>">Sign in</a>
+                    </li>
+                    <li>
+                        <a href="<%= new_user_path %>">Sign up</a>
                     </li>
                     <li>
                         <a href="/trips/show">TripsShow</a>
@@ -33,7 +39,7 @@
                         <a href="#">TripEdit</a>
                     </li>
                     <li>
-                        <a href="/trips">TripIndex</a>
+                        <a href="<%= trips_path %>">TripIndex</a>
                     </li>
 
                 </ul>
