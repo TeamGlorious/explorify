@@ -1,7 +1,10 @@
 <%= render partial: "shared/center_col_header" %>
 
+<% if @current_user %>
+  <a href="/trips/new"><h3 class="text-center">Create a new journey!</h3></a><br><br>
+<% end %>
+
 <h1 class="text-center">Previous Journeys</h1>
-<a href="/trips/new"><h3 class="text-center">Create a new journey!</h3></a><br>
 
 <% @trips_arr.each do |trip| %>
   <ul>
