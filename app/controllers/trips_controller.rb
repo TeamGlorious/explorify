@@ -135,18 +135,15 @@ class TripsController < ApplicationController
   end
 
   def show
-    @trip = Trip.find_by_id(4)
-    # @trip = Trip.find_by_id(params[:id])
-    # @medias = @trip.medias
-    # gon.trip = @trip
-    # gon.media = @medias
+    @media = Media.where(trip_id: 4).all
+    gon.locations = @media
   end
 
   def edit
     if current_user && current_user[:id] == User.find_by_id(params[:id])
       @trip = Trip.find_by_id(params[:id])
-    @medias = @trip.medias
-    @current_user = current_user
+      @medias = @trip.medias
+      @current_user = current_user
     else
       redirect_to root_path
     end
