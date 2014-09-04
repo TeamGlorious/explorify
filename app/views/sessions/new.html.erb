@@ -1,15 +1,18 @@
 <%= render partial: "shared/center_col_header" %>
 
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
    
 </head>
 <body class = "body-background">
   <div class="container">
-  <div class="row">
   <div class="col-lg-4 col-lg-offset-4">
-  <h1 class="text-center">Login</h1><br>
+  <br>
+  <br>
+  <h2 class="acct">Welcome back.</h2><br>
+  <br>
+
   
   <div role="form" class="row-centered">
  
@@ -19,13 +22,13 @@
           <%= f.password_field :password, placeholder: "password", class: "form-control" %>
           <%= f.submit "Go", class: "btn btn-default form-control" %>
         <% end %>
-        <%= link_to "Sign up!", new_user_path, class: "text-center" %>
+        <%= link_to "Sign up!", new_user_path, class: "text-center" %> <br>
         <%= link_to "Forgot your password?", new_password_path   %>
 
       </div>
     </div>
   </div>
-  </div>
+
 </div>
   
 
