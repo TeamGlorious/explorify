@@ -7,6 +7,7 @@ class TripsController < ApplicationController
   def index
     @trips_arr = []
     @trips = Trip.all
+    @current_user = current_user
 
     # this populates the trip index with a random image from it's medias for display on the index page
     @trips.each do |trip|
@@ -26,6 +27,7 @@ class TripsController < ApplicationController
     # this is the url that asks the user to log into their instagram account for data access.  With callback url.
     @url = "https://api.instagram.com/oauth/authorize/?client_id=#{CLIENT_ID}&redirect_uri=#{CALLBACK_URL}&response_type=code"
     @trip = Trip.new
+    @current_user = current_user
   end
 
   def authorize
@@ -134,8 +136,12 @@ class TripsController < ApplicationController
   end
 
   def edit
+    if current_user[:id] != User.find_by_id(params[:id])
+      redirect_to trips_path
+    end
     @trip = Trip.find_by_id(params[:id])
     @medias = @trip.medias
+    @current_user = current_user
   end
 
   def update
