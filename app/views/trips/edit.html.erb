@@ -3,6 +3,7 @@
 <h1><%= @trip.title %></h1>
 <p><%= @trip.description %></p>
 <h3><%= @trip.date_start.to_time %> - <%= @trip.date_end.to_time %></h3>
+
 <%= button_to "Delete Journey", trip_path, method: :delete, class: "btn btn-default" %><br><br>
 
 <% @medias.each do |media| %>

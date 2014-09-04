@@ -5,7 +5,7 @@
 <div class="form-group">
   <%= form_for [@trip, @media] do |f| %>
     <%= f.text_field :lat, placeholder: "latitude", class: "form-control" %>
-    <%= f.text_field :long, placeholder: "longitude", class: "form-control" %>
+    <%= f.text_field :lng, placeholder: "longitude", class: "form-control" %>
     <%= f.date_field :date_taken, placeholder: "Date taken", class: "form-control" %>
     <%= f.submit "Save changes", class: "btn btn-default" %>
   <% end %>

@@ -62,10 +62,12 @@ class TripsController < ApplicationController
     steph_id = 198234099
     palmer_id = 18145159
 
+
     if @trip.date_start != "" && @trip.date_end != ""
       date_start = Date.parse(@trip.date_start).to_time.to_i
       date_end = Date.parse(@trip.date_end).to_time.to_i
     else
+      # instagram allows no date range, but I've limited this to a two month period.
       date_end = DateTime.now.to_time.to_i
       date_start = date_end - two_months
     end
@@ -80,16 +82,17 @@ class TripsController < ApplicationController
         # "https://api.instagram.com/v1/users/#{session['instagram_user_id']}/media/recent/",
 
         # this is the Shawn specific url
-        "https://api.instagram.com/v1/users/#{palmer_id}/media/recent/",
+        "https://api.instagram.com/v1/users/#{shawn_id}/media/recent/",
         :params => params
       )
-      results = JSON.parse(request.body)
-      length = results["data"].length
+      query_results = JSON.parse(request.body)
+      length = @query_results["data"].length
       # Use the last returned media object's timestamp as the new date_end for time range
-      date_end = results["data"][-1]["created_time"].to_i - 1
-      @results_arr.push results
+      date_end = query_results["data"][-1]["created_time"].to_i - 1
+      @results_arr.push query_results
     end
   
+    # build each new media object
     @results_arr.each do |results|
       results["data"].each do |media|
         media_new = @trip.medias.new
@@ -99,12 +102,13 @@ class TripsController < ApplicationController
           # media_new.location = true
           media_new.lat = media["location"]["latitude"]
           media_new.long = media["location"]["longitude"]
-        # else
+          media_new.date_taken = DateTime.strptime(media["created_time"], '%s').to_s
+          # moved this here so that only photos with location data are processed.  Temporary fix.
+          media_new.save
+        else
         #   media_new.location = false
         end
-        media_new.date_taken = DateTime.strptime(media["created_time"], '%s').to_s
-        # binding.pry
-        media_new.save
+        
       end
     end
 
