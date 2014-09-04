@@ -7,12 +7,13 @@ $(document).on("ready", function() {
 
 // Maps *******************************
 // Raw coordinate data from Instagram
-var coordinates = [[37.2,-122.2],[15.3,-90.8],[40.5,-100.1],[35.6672,-105.9644],[37.2,-122.2]];
+var coordinates = [[37.2,-122.2],[15.3,-90.8],[40.5,-100.1],[35.6672,-105.9644]];
 var travelPoints = [];// Will hold google processed coordinates data
 var keyPhotos = [];
 var addPhoto = "<%= asset_path('balloonMarker.png') %>";
 var map;
 var bounds;
+var markers = [];
 
 
 function initialize(){
@@ -45,7 +46,8 @@ function initialize(){
     var place = places[0];
     travelPoints.push(place.geometry.location);
     keyPhotos.push(addPhoto);
-
+    clearMarkers();
+    // markers = [];
     // Update Marker draw
     autoMarkers();
     map.fitBounds(bounds);
@@ -58,6 +60,13 @@ var mapPoints = function(){
     travelPoints.push(new google.maps.LatLng(coordinates[i][0], coordinates[i][1]));
   }
 };
+
+function clearMarkers(){
+  for (var i = 0; i < markers.length; i++){
+    markers[i].setMap(null);
+  }
+  markers = [];
+}
 
 // Draw markers with delay animation
 function autoMarkers(){
@@ -75,33 +84,33 @@ function autoMarkers(){
     markerImage.anchor = new google.maps.Point(20, 53);
 
     setTimeout(function(){
-      marker = new google.maps.Marker({
+      markers.push(new google.maps.Marker({
         position: travelPoints[i],
         map: map,
-        draggable: true,
+        draggable: false,
         animation: google.maps.Animation.DROP,
         icon: markerImage
-      });
+      }));
       if( i > 0) {
         var line = new google.maps.Polyline({
           geodesic: true,
           path: [travelPoints[i-1], travelPoints[i]],
-          strokeColor:"#36a657",
-          strokeOpacity:0.7,
-          strokeWeight:3,
+          strokeColor:"orange",
+          strokeOpacity:0.9,
+          strokeWeight:2,
           map: map
         });
       }
-      marker.setTitle(i.toString());
+      markers[i].setTitle(i.toString());
       keyPhotos.push(addPhoto);
 
-      markerInfo(marker, i);
+      markerInfo(markers[i], i);
       bounds.extend(travelPoints[i]);
       if (i > 0){
         map.fitBounds(bounds);
       }
       done();
-    }, (i+3) * 100);
+    }, 200);
   });
 }
 

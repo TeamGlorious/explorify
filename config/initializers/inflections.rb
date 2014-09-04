@@ -15,6 +15,12 @@
 #   inflect.acronym 'RESTful'
 # end
 
+# this is literally the hackiest thing ever invented!  
+# I broke the rails pluralization rules when I made a singular model with a plural name!
+# the plural of media is media
+# the singular of media is medium
+# there is no such thing as medias... until now!
+
 ActiveSupport::Inflector.inflections do |inflect|
   # inflect.irregular 'medium', 'media'
   # inflect.irregular 'media', 'medias'

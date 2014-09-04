@@ -1,7 +1,10 @@
 class MediasController < ApplicationController
   def edit
-    @trip = Trip.find_by_id(params[:trip_id])
-    @media = Media.find_by_id(params[:id])
+    if (current_user && current_user[:id] != params[:user_id])
+      @trip = Trip.find_by_id(params[:trip_id])
+      @media = Media.find_by_id(params[:id])
+    end
+    redirect_to root_path
   end
 
   def update

@@ -1,7 +1,5 @@
 class TripsController < ApplicationController
 
-  require 'open-uri'
-
   CALLBACK_URL = "http://localhost:3000/trips/callback"
   CLIENT_ID = ENV["INSTAGRAM_CLIENT_ID"]
   CLIENT_SECRET = ENV["INSTAGRAM_CLIENT_SECRET"]
@@ -9,8 +7,9 @@ class TripsController < ApplicationController
   def index
     @trips_arr = []
     @trips = Trip.all
+    @current_user = current_user
 
-    # this populates the trip index with a random image from it's media
+    # this populates the trip index with a random image from it's medias for display on the index page
     @trips.each do |trip|
       new_trip = {}
       new_trip["trip"] = trip
@@ -25,12 +24,19 @@ class TripsController < ApplicationController
   end
 
   def new
-    @url = "https://api.instagram.com/oauth/authorize/?client_id=#{CLIENT_ID}&redirect_uri=#{CALLBACK_URL}&response_type=code"
-    @trip = Trip.new
+    if (current_user)
+      # this is the url that asks the user to log into their instagram account for data access.  With callback url.
+      @url = "https://api.instagram.com/oauth/authorize/?client_id=#{CLIENT_ID}&redirect_uri=#{CALLBACK_URL}&response_type=code"
+      @trip = Trip.new
+    else
+      redirect_to trips_path
+    end
   end
 
   def authorize
+    # OAuth code
     code = params[:code]
+    # post an OAuth access token request to the instagram API server.
     request = Typhoeus::Request.new(
       "https://api.instagram.com/oauth/access_token",
       method: :post,
@@ -48,6 +54,8 @@ class TripsController < ApplicationController
   end
 
   def create
+    # and the tide began to rise.  Lots of stuff happening in this method.
+
     @results_arr = []
     # Unix time 8 weeks
     two_months = 4838400
@@ -64,14 +72,18 @@ class TripsController < ApplicationController
 
 
     if @trip.date_start != "" && @trip.date_end != ""
+      # limit searches to four months
       date_start = Date.parse(@trip.date_start).to_time.to_i
       date_end = Date.parse(@trip.date_end).to_time.to_i
+      # if date_end - date_start > two_months * 2
+      #   date_start = date_end - (two_months * 2)
+      # end
     else
-      # instagram allows no date range, but I've limited this to a two month period.
+      # instagram allows no date range, but I've limited this to a four month period.
       date_end = DateTime.now.to_time.to_i
-      date_start = date_end - two_months
+      date_start = date_end - two_months * 2
     end
-    
+
     # Instagram has a hard cap of 33 media returned per query.
     # This loop does multiple queries to get all of the media during a time frame
     length = 33
@@ -95,13 +107,14 @@ class TripsController < ApplicationController
       else
         length = 0
       end
-  
+
       # build each new media object
       if @results_arr.length > 0
         @results_arr.each do |results|
           results["data"].each do |media|
             media_new = @trip.medias.new
             media_new.full_res_img = media["images"]["standard_resolution"]["url"]
+            media_new.med_res_img = media["images"]["low_resolution"]["url"]
             media_new.thumbnail = media["images"]["thumbnail"]["url"]
             if media["location"]
               # media_new.location = true
@@ -122,12 +135,21 @@ class TripsController < ApplicationController
   end
 
   def show
-
+    @trip = Trip.find_by_id(4)
+    # @trip = Trip.find_by_id(params[:id])
+    # @medias = @trip.medias
+    # gon.trip = @trip
+    # gon.media = @medias
   end
 
   def edit
-    @trip = Trip.find_by_id(params[:id])
+    if current_user && current_user[:id] == User.find_by_id(params[:id])
+      @trip = Trip.find_by_id(params[:id])
     @medias = @trip.medias
+    @current_user = current_user
+    else
+      redirect_to root_path
+    end
   end
 
   def update
