@@ -17,17 +17,16 @@
  *= require_self
  */
 
-.spacer {
-  height: 75px;
-}
-
-
 .admin {
 	background: #f0f;
 }
 
 body {
-	background-image: url("/assets/balloonHome.jpg");
+/*	background-image: url("/assets/balloonHome.jpg");*/
 	color: white;
+}
+
+li a {
+	text-decoration: none;
 }
 
