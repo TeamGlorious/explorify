@@ -666,6 +666,7 @@
 		#footer-wrapper a
 		{
 			color: #fff;
+			text-decoration: none;
 		}
 
 		#footer-wrapper hr
