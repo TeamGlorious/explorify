@@ -154,7 +154,16 @@ class TripsController < ApplicationController
     end
   end
 
-  def show
+  def show  
+    
+  if current_user 
+    @current_user = current_user
+    puts @current_user
+    @trip = @current_user.trips.find_by_id(params[:id])
+    puts "HERE ARE OUR TRIPS!"
+    puts @trips
+    
+  end
     @media = Media.where(trip_id: 4).all
     gon.locations = @media
   end
