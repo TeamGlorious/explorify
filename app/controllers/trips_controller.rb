@@ -1,7 +1,5 @@
 class TripsController < ApplicationController
 
-  require 'open-uri'
-
   CALLBACK_URL = "http://localhost:3000/trips/callback"
   CLIENT_ID = ENV["INSTAGRAM_CLIENT_ID"]
   CLIENT_SECRET = ENV["INSTAGRAM_CLIENT_SECRET"]
@@ -10,7 +8,7 @@ class TripsController < ApplicationController
     @trips_arr = []
     @trips = Trip.all
 
-    # this populates the trip index with a random image from it's media
+    # this populates the trip index with a random image from it's medias for display on the index page
     @trips.each do |trip|
       new_trip = {}
       new_trip["trip"] = trip
@@ -25,12 +23,15 @@ class TripsController < ApplicationController
   end
 
   def new
+    # this is the url that asks the user to log into their instagram account for data access.  With callback url.
     @url = "https://api.instagram.com/oauth/authorize/?client_id=#{CLIENT_ID}&redirect_uri=#{CALLBACK_URL}&response_type=code"
     @trip = Trip.new
   end
 
   def authorize
+    # OAuth code
     code = params[:code]
+    # post an OAuth access token request to the instagram API server.
     request = Typhoeus::Request.new(
       "https://api.instagram.com/oauth/access_token",
       method: :post,
@@ -48,6 +49,8 @@ class TripsController < ApplicationController
   end
 
   def create
+    # and the tide began to rise.  Lots of stuff happening in this method.
+
     @results_arr = []
     # Unix time 8 weeks
     two_months = 4838400
@@ -64,12 +67,16 @@ class TripsController < ApplicationController
 
 
     if @trip.date_start != "" && @trip.date_end != ""
+      # limit searches to four months
+      if date_end - date_start > two_months * 2
+        date_start = date_end - (two_months * 2)
+      end
       date_start = Date.parse(@trip.date_start).to_time.to_i
       date_end = Date.parse(@trip.date_end).to_time.to_i
     else
-      # instagram allows no date range, but I've limited this to a two month period.
+      # instagram allows no date range, but I've limited this to a four month period.
       date_end = DateTime.now.to_time.to_i
-      date_start = date_end - two_months
+      date_start = date_end - two_months * 2
     end
     
     # Instagram has a hard cap of 33 media returned per query.
@@ -103,6 +110,7 @@ class TripsController < ApplicationController
           media_new.lat = media["location"]["latitude"]
           media_new.long = media["location"]["longitude"]
           media_new.date_taken = DateTime.strptime(media["created_time"], '%s').to_s
+
           # moved this here so that only photos with location data are processed.  Temporary fix.
           media_new.save
         else

@@ -1,4 +1,6 @@
 <p><%= @user.name %></p>
 <p><%= @user.email %></p>
 <p><img src= "<%= @user.img %>"></p>
-<%= link_to "logout", logout_path %>
+<% if current_user[:id] == @user.id %>
+  <%= link_to "logout", logout_path %>
+<% end %>
