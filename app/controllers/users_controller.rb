@@ -33,7 +33,6 @@ class UsersController < ApplicationController
       @user = User.new(user_params)
       render :new
     else
-      binding.pry
       puts '*' * 50
       puts 'Creating new User!!!'
       @user = User.authenticate(@user.email, user_params[:password])
