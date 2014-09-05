@@ -7,7 +7,6 @@ $(document).on("ready", function() {
 
 // Thumbnail Display ******************
 function showPictures(){
-
     var div = $('#thumbnails');
 
       for (var i = 0; i < keyPhotos.length; i++){
@@ -18,16 +17,12 @@ function showPictures(){
         });
 
         img.click(function(){
-          markers[i].setAnimation(google.maps.Animation.BOUNCE);
-          setTimeout(function(){ markers[i].setAnimation(null); }, 750);
-        });
 
+
+        });
 
         div.append(img);
       }
-
-
-
   }
 
 // Maps *******************************
