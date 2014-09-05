@@ -19,7 +19,6 @@ class TripsController < ApplicationController
         new_trip["rand_img"] = media
       end
       @trips_arr.push new_trip
-     
     end
   end
 
@@ -48,7 +47,6 @@ class TripsController < ApplicationController
       )
     @results = JSON.parse((request.run).body)
     session["access_token"] = @results["access_token"]
-  
     session["instagram_user_id"] = @results["user"]["id"]
     redirect_to new_trip_path
   end
@@ -114,7 +112,6 @@ class TripsController < ApplicationController
           :params => params
         )
         query_results = JSON.parse(request.body)
-        # binding.pry
         if (query_results["data"].length > 0)
           length = query_results["data"].length
           # Use the last returned media object's timestamp as the new date_end for time range
@@ -145,11 +142,7 @@ class TripsController < ApplicationController
             end
           end
         end
-
-        # image = MiniMagick::Image.open(media["images"]["thumbnail"]["url"])
-        # binding.pry
       end
-      # binding.pry
       redirect_to edit_trip_path @trip[:id]
     end
   end
@@ -158,8 +151,10 @@ class TripsController < ApplicationController
     
   if current_user 
     @current_user = current_user
+    @trip = Trip.find_by_id(params[:id])
+    @user = User.find_by_id(@trip.id)
     puts @current_user
-    @trip = @current_user.trips.find_by_id(params[:id])
+
     puts "HERE ARE OUR TRIPS!"
     puts @trips
     

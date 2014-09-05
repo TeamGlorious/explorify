@@ -21,7 +21,6 @@ class MediasController < ApplicationController
 
   def destroy
     media = Media.find_by_id(params[:id])
-    # binding.pry
     media.destroy
     redirect_to edit_trip_path Trip.find_by_id(params[:trip_id])
   end
