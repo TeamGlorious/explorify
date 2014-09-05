@@ -1,5 +1,8 @@
+<body class="tripbody">
 <div class ="container">
-    <br><br><h2 class="insta text-center"><%= @user.name %></h2>
+
+    <br><br>
+    <h2 class="insta text-center"><%= @user.name %></h2>
     <% flash.each do |name, msg| %>
       <%= content_tag :div, msg, class: "#{name} flash" %><br>
     <% end %><br>
@@ -9,29 +12,24 @@
       <a href="/trips/new"><h3 class="text-center">Create a new journey!</h3></a><br><br>
     <% end %>
 
-
-  <br>
   <div class = "all" style = "border-radiusL 1%;">
   <div class ="row">
     <% @trips_arr.each do |trip| %>  
-  <div class="col-lg-3">
-      <h3 class="text-center"><%= trip["trip"]["title"] %></h3>
-   <!--    <li class="text-center"><%= trip["trip"]["date_start"] %> - <%= trip["trip"]["date_end"] %></li> -->
-      
+    <div class="col-lg-3">
+    <h3 class="text-center"><%= trip["trip"]["title"] %></h3>
+   <!--    <li class="text-center"><%= trip["trip"]["date_start"] %> - <%= trip["trip"]["date_end"] %></li> 
       <% if trip["rand_img"] %>
         <!-- random image from media for this trip -->
-    
             <a href="/trips/<%= trip['trip']['id'].to_s %>">
               <img src ="<%= trip['rand_img'] %>" class="item-center text-center" style= "border-radius: 4%; width: 187px; height: 150px;">
-            </a>
-        
+            </a>  
       <% end %>
       <% if @user.id == @current_user.id %>
         <%= button_to "Edit trip", edit_trip_path(trip["trip"]), method: :get, class: "text-center" %>
       <% end %>
+</div>
     <% end %><br><br>
 
-</div>
 </div>
 </div>
 </body>
