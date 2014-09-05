@@ -1,4 +1,4 @@
-
+<div class ="container">
     <br><br><h2 class="insta text-center"><%= @user.name %></h2>
     <% flash.each do |name, msg| %>
       <%= content_tag :div, msg, class: "#{name} flash" %><br>
@@ -9,7 +9,7 @@
       <a href="/trips/new"><h3 class="text-center">Create a new journey!</h3></a><br><br>
     <% end %>
 
-<div class ="container">
+
   <br>
   <div class = "all" style = "border-radiusL 1%;">
   <div class ="row">
