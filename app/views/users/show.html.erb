@@ -1,8 +1,14 @@
-<body class="tripbody">
+
+<body class="background-trips">
+
+
 <div class ="container">
 
     <br><br>
     <h2 class="insta text-center"><%= @user.name %></h2>
+
+    <br><br><h2 class="insta text-center"><%= @user.name %></h2>
+
     <% flash.each do |name, msg| %>
       <%= content_tag :div, msg, class: "#{name} flash" %><br>
     <% end %><br>
@@ -17,7 +23,6 @@
     <% @trips_arr.each do |trip| %>  
     <div class="col-lg-3">
     <h3 class="text-center"><%= trip["trip"]["title"] %></h3>
-   <!--    <li class="text-center"><%= trip["trip"]["date_start"] %> - <%= trip["trip"]["date_end"] %></li> 
       <% if trip["rand_img"] %>
         <!-- random image from media for this trip -->
             <a href="/trips/<%= trip['trip']['id'].to_s %>">
