@@ -5,6 +5,18 @@ $(document).on("ready", function() {
 
 
 
+// Thumbnail Display ******************
+function showPictures(){
+  var img = new Image();
+  var div = document.getElementById('thumbnails');
+
+  img.onload = function() {
+    div.appendChild(img);
+  };
+
+  img.src = "http://scontent-a.cdninstagram.com/hphotos-xaf1/outbound-distilleryimage3/t0.0-17/OBPTH/6f15b0e8b4ac11e387ab0eeb370d35ff_5.jpg";
+}
+
 // Maps *******************************
 var coordinates = [], // Raw lat & lng from photos
     travelPoints = [],// Will hold google processed coordinates data
@@ -39,6 +51,8 @@ function initialize(){
   map.fitBounds(bounds); // set center and zoom level
 
   createMarkers();// Draw markers
+
+  showPictures();
 
   // SEARCH
   // Create the search box and link it to the UI element.
