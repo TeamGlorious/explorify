@@ -20,26 +20,25 @@
                     <li class="hidden">
                         <a href="#page-top"></a>
                     </li>
+                    
+                    <% if @current_user %>
+                      <li><a href="<%= logout_path %>">Logout</a></li>
+                    <% else %>
+                      <li>
+                          <a href="<%= login_path %>">Sign in</a>
+                      </li>
+                      <li>
+                          <a href="<%= new_user_path %>">Sign up</a>
+                      </li>
+                    <% end %>
                     <li>
-                        <a href="#about">About</a>
+                        <a href="<%= trips_path %>">Browse Journeys</a>
                     </li>
                     <li>
-                        <a href="#cont">Contact</a>
+                        <a href="<%= about_path %>">About</a>
                     </li>
                     <li>
-                        <a href="<%= login_path %>">Sign in</a>
-                    </li>
-                    <li>
-                        <a href="<%= new_user_path %>">Sign up</a>
-                    </li>
-                    <li>
-                        <a href="/trips/show">TripsShow</a>
-                    </li>
-                    <li>
-                        <a href="#">TripEdit</a>
-                    </li>
-                    <li>
-                        <a href="<%= trips_path %>">TripIndex</a>
+                        <a href="<%= contact_path %>">Contact</a>
                     </li>
 
                 </ul>

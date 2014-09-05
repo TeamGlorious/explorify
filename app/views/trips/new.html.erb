@@ -1,5 +1,3 @@
-  <%= render partial: "shared/center_col_header" %>
-
   <% if session["access_token"] != nil %>
   <%# binding.pry %>
     <h2 class="text-center">Thank you.</h2>
@@ -9,6 +7,3 @@
   <% else %>
     <a href="<%= @url %>"><h3>Please log into Instagram</h3></a>
   <% end %>
-
-<%= render partial: "shared/div_footer" %>
-
