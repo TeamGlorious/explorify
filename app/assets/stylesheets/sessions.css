@@ -1,5 +1,10 @@
 
 .body-background {
-	background: url(overlay.png);
+	background: url('balloonHome.jpg');
 	background-color: #F3EDDF;
+}
+
+.body-backgorund-tree {
+  background: url('balloonHome.jpg') center center;
+  background-size: cover;
 }

@@ -23,6 +23,7 @@
                     
                     <% if @current_user %>
                       <li><a href="<%= logout_path %>">Logout</a></li>
+                      <li><a href="<%= user_path (@current_user) %>">Home</a>
                     <% else %>
                       <li>
                           <a href="<%= login_path %>">Sign in</a>
@@ -35,15 +36,9 @@
                         <a href="<%= trips_path %>">Browse Journeys</a>
                     </li>
                     <li>
-<<<<<<< HEAD
                         <a href="<%= about_path %>">Team</a>
                     </li>
-    
 
-=======
-                        <a href="<%= about_path %>">About</a>
-                    </li>
->>>>>>> 992f0679e22ee152ea9887170394356a8fade3ae
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
