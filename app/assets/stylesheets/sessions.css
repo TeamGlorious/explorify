@@ -1,3 +1,5 @@
+
 .body-background {
-	background-image: url(balloonHome.jpg);
+	background: url(overlay.png);
+	background-color: #F3EDDF;
 }
