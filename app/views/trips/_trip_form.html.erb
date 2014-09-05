@@ -1,8 +1,8 @@
 <div role="form" class="form-horizontal">
+<div class="form-group">
   <%= form_for trip do |f| %>  
-    <div class="form-group">
       <%= f.text_field :title, placeholder: "Title", class: "form-control", autofocus: true %>
-      <%= f.text_field :date_start, placeholder: "Start date", type: "date", class: "form-control", 'date-date-format' => "mm/dd/yyyy" %>
+      <%= f.text_field :date_start, placeholder: "Start date", type: "date", class: "form-control"%>
       <%= f.text_field :date_end, placeholder: "End date", type: "date", class: "form-control" %>
       <%= f.text_area :description, placeholder: "Description", class: "form-control" %>
       <%= f.submit button_text, class: "btn btn-default form-control" %>
