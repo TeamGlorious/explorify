@@ -1,13 +1,15 @@
-<%= javascript_include_tag "trips" %>
-<body class="tripbody">
+
+<body class="tripbody background-trips">
+
+  <%= javascript_include_tag "trips" %>
 
 
+  <div id="map-container" style="color: #878787;">
+    <div id="map-canvas"></div>
+  </div>
 
-<div id="map-container" style="color: #878787;">
-  <div id="map-canvas"></div>
-</div>
+  <div class="right-half">
 
-<div class="right-half">
 
   <input id="search-maps" class="controls" type="text" placeholder="Search for location" style="z-index: 1;">
 
@@ -15,16 +17,16 @@
 	<% if @current_user %>
 		<br>
   		<h2 style = "color:#954900"> <%= @trip.title %> by <a href="/user/:id"><%= @current_user.name %></a></h2>
+
 			<p style = "color:white">
 		  		<%= @trip.description %>
-	  	</p>
-	<% end %>
+  		  	</p>
+  	  	<% end %>
 
-  </p>
   <div id="thumbnails"></div>
 
 
-</div>
+  </div>
 </body>
 
 

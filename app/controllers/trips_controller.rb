@@ -92,14 +92,14 @@ class TripsController < ApplicationController
 
 
       # This is currently disabled since validations now require date ranges
-      # if @trip.date_start != "" && @trip.date_end != ""
+      if @trip.date_start != "" && @trip.date_end != ""
         # limit searches to four months
-        # date_start = Date.parse(@trip.date_start).to_time.to_i
-        # date_end = Date.parse(@trip.date_end).to_time.to_i
-        # if date_end - date_start > two_months * 2
-        #   date_start = date_end - (two_months * 2)
-        # end
-      # end
+        date_start = Date.parse(@trip.date_start).to_time.to_i
+        date_end = Date.parse(@trip.date_end).to_time.to_i
+        if date_end - date_start > two_months * 2
+          date_start = date_end - (two_months * 2)
+        end
+      end
 
       # Instagram has a hard cap of 33 media returned per query.
       # This loop does multiple queries to get all of the media during a time frame
