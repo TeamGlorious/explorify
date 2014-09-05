@@ -1,6 +1,35 @@
 <p><%= @user.name %></p>
-<p><%= @user.email %></p>
-<p><img src= "<%= @user.img %>"></p>
+<% flash.each do |name, msg| %>
+  <%= content_tag :div, msg, class: "#{name} flash" %><br>
+<% end %><br>
+<h2><%= @user.name %></h2>
+<!-- <p><img src= "<%= @user.img %>"></p> -->
+<ul>
+<% if @current_user[:id] == @user[:id] %>
+  <a href="/trips/new"><h3 class="text-center">Create a new journey!</h3></a><br><br>
+<% end %>
+<% @trips_arr.each do |trip| %>
+
+  <h3><%= trip["trip"]["title"] %></h3>
+  <li><%= trip["trip"]["date_start"] %> - <%= trip["trip"]["date_end"] %></li>
+  
+
+
+  <% if trip["rand_img"] %>
+    <!-- random image from media for this trip -->
+      <li>
+        <a href="/trips/<%= trip['trip']['id'].to_s %>">
+          <img src ="<%= trip['rand_img'] %>">
+        </a>
+      </li>
+  <% end %>
+  
+  <% if @user.id == @current_user.id %>
+    <%= button_to "Edit trip", edit_trip_path(trip["trip"]), method: :get %>
+  <% end %>
+
+<% end %><br><br>
+</ul>
 <% if @current_user && @current_user[:id] == @user.id %>
   <%= link_to "logout", logout_path %>
 <% end %>
