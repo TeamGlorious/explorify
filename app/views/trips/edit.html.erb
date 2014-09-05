@@ -1,4 +1,3 @@
-<%= render partial: "shared/center_col_header" %>
 <% if @medias.length == 0 %>
   <h2>This journey has no media!</h2>
 <% end %>
@@ -14,6 +13,3 @@
   <%= button_to "Edit media", edit_trip_media_path(@trip, media), method: :get, class: "btn btn-default" %>
   <%= button_to "Delete media", trip_media_path(@trip, media), method: :delete, class: "btn btn-default" %>
 <% end %>  
-
-
-<%= render partial: "shared/div_footer" %>
