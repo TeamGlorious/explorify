@@ -7,31 +7,27 @@
 </head>
 <body class = "body-background">
   <div class="container">
-  <div class="col-lg-4 col-lg-offset-4">
-  <br>
-  <br>
-  <h2 class="acct">Welcome back.</h2><br>
-  <br>
-
-  
-  <div role="form" class="row-centered">
- 
-      <div class="form-group-horizontal">
-        <%= form_for :user do |f| %>
+    <div role="form" class="col-lg-4 col-lg-offset-4">
+      <br>
+      <br>
+      <h2 class="text-center acct">Welcome back.</h2><br>
+      
+      <div role="form">
+        <% flash.each do |name, msg| %>
+        <%= content_tag :div, msg, class: "#{name} flash" %><br>
+        <% end %><br>
+        <div>
+          <%= form_for @user, url: login_path do |f| %>
           <%= f.text_field :email, placeholder: "email", class: "form-control", autofocus: true %>
           <%= f.password_field :password, placeholder: "password", class: "form-control" %>
           <%= f.submit "Go", class: "btn btn-default form-control" %>
-        <% end %>
-        <%= link_to "Sign up!", new_user_path, class: "text-center" %> <br>
-        <%= link_to "Forgot your password?", new_password_path   %>
-
+          <%= link_to "Sign up!", new_user_path, class: "text-center" %> <br>
+          <%= link_to "Forgot your password?", new_password_path   %>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>
-
-</div>
-  
-
 </body>
 </html>
 

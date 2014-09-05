@@ -16,6 +16,10 @@
  *= require_self
  */
 
+ .flash {
+  color: red;
+ }
+
  .spacer {
   height: 50px;
  }
