@@ -7,15 +7,28 @@ $(document).on("ready", function() {
 
 // Thumbnail Display ******************
 function showPictures(){
-  var img = new Image();
-  var div = document.getElementById('thumbnails');
 
-  img.onload = function() {
-    div.appendChild(img);
-  };
+    var div = $('#thumbnails');
 
-  img.src = "http://scontent-a.cdninstagram.com/hphotos-xaf1/outbound-distilleryimage3/t0.0-17/OBPTH/6f15b0e8b4ac11e387ab0eeb370d35ff_5.jpg";
-}
+      for (var i = 0; i < keyPhotos.length; i++){
+        var img = $(keyPhotos[i]);
+        img.width(150);
+        img.mouseover(function(){
+          $(this).css("cursor","pointer");
+        });
+
+        img.click(function(){
+          markers[i].setAnimation(google.maps.Animation.BOUNCE);
+          setTimeout(function(){ markers[i].setAnimation(null); }, 750);
+        });
+
+
+        div.append(img);
+      }
+
+
+
+  }
 
 // Maps *******************************
 var coordinates = [], // Raw lat & lng from photos
@@ -105,9 +118,10 @@ function createMarkers(){
         position: travelPoints[i],
         map: map,
         draggable: false,
-        animation: google.maps.Animation.DROP,
         icon: markerImage
       }));
+      markers[i].setAnimation(google.maps.Animation.BOUNCE);
+      setTimeout(function(){ markers[i].setAnimation(null); }, 1500);
       markers[i].setTitle(dates[i]);
       markerInfoWindow(markers[i], i);
 
