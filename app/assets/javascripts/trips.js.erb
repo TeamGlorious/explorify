@@ -5,6 +5,26 @@ $(document).on("ready", function() {
 
 
 
+// Thumbnail Display ******************
+function showPictures(){
+    var div = $('#thumbnails');
+
+      for (var i = 0; i < keyPhotos.length; i++){
+        var img = $(keyPhotos[i]);
+        img.width(150);
+        img.mouseover(function(){
+          $(this).css("cursor","pointer");
+        });
+
+        img.click(function(){
+
+
+        });
+
+        div.append(img);
+      }
+  }
+
 // Maps *******************************
 var coordinates = [], // Raw lat & lng from photos
     travelPoints = [],// Will hold google processed coordinates data
@@ -39,6 +59,8 @@ function initialize(){
   map.fitBounds(bounds); // set center and zoom level
 
   createMarkers();// Draw markers
+
+  showPictures();
 
   // SEARCH
   // Create the search box and link it to the UI element.
@@ -91,9 +113,10 @@ function createMarkers(){
         position: travelPoints[i],
         map: map,
         draggable: false,
-        animation: google.maps.Animation.DROP,
         icon: markerImage
       }));
+      markers[i].setAnimation(google.maps.Animation.BOUNCE);
+      setTimeout(function(){ markers[i].setAnimation(null); }, 1500);
       markers[i].setTitle(dates[i]);
       markerInfoWindow(markers[i], i);
 
