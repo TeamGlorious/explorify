@@ -9,13 +9,13 @@
   <input id="search-maps" class="controls" type="text" placeholder="Search for location" style="z-index: 1;">
 
 
-	<% if @current_user %> 
+	<% if @current_user %>
   		<h2> <%= @trip.title %> by <a href="/user/:id"><%= @current_user.name %></a></h2>
-			<p style = "color:black">		
-		  		<%= @trip.description %>	
+			<p style = "color:black">
+		  		<%= @trip.description %>
 		  	</p>
 	  	<% end %>
- 
+
 
 </p>
   <%= @media.each do |media| %>

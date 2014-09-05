@@ -54,7 +54,7 @@ class TripsController < ApplicationController
   end
 
   def create
-    
+
     @results_arr = []
     # Unix time 8 weeks
     two_months = 4838400
@@ -154,17 +154,16 @@ class TripsController < ApplicationController
     end
   end
 
-  def show  
-    
-  if current_user 
-    @current_user = current_user
-    puts @current_user
-    @trip = @current_user.trips.find_by_id(params[:id])
-    puts "HERE ARE OUR TRIPS!"
-    puts @trips
-    
-  end
-    @media = Media.where(trip_id: 4).all
+  def show
+    if current_user
+      @current_user = current_user
+      puts @current_user
+      @trip = @current_user.trips.find_by_id(params[:id])
+      puts "HERE ARE OUR TRIPS!"
+      puts @trips
+    end
+
+    @media = Media.where(trip_id: params[:id]).all
     gon.locations = @media
   end
 
