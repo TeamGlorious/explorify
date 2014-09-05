@@ -1,6 +1,14 @@
-<h1 class="text-center">Browse journeys</h1>
+<br>
+<br>
+<div class="container">
 
+<h2 class="insta text-center">Browse journeys</h2>
+<br>
+<br>
+<div class="all" style= "border-radius: 1%;">
+<div class="row">
 <% @trips_arr.each do |trip| %>
+<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
   <ul>
     <h3><%= trip["trip"].title %></h3>
     <li><%= trip["trip"].date_start %></li>
@@ -8,7 +16,15 @@
     <li><%= trip["trip"].description %></li>
     <% if trip["rand_img"] %>
     <!-- random image from media for this trip -->
+<<<<<<< HEAD
+      <li><img src ="<%= trip['rand_img'] %>"</li>
+</div>
+=======
       <li><a href="/trips/<%= trip["trip"]["id"].to_s %>"><img src ="<%= trip['rand_img'] %>"></a></li>
+>>>>>>> 992f0679e22ee152ea9887170394356a8fade3ae
     <% end %>
   </ul><br>
 <% end %>
+</div>
+</div>
+</div>

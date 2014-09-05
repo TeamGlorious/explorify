@@ -19,7 +19,6 @@ class TripsController < ApplicationController
         new_trip["rand_img"] = media
       end
       @trips_arr.push new_trip
-      
     end
   end
 
