@@ -19,7 +19,7 @@ class TripsController < ApplicationController
         new_trip["rand_img"] = media
       end
       @trips_arr.push new_trip
-      # binding.pry
+     
     end
   end
 
@@ -48,7 +48,7 @@ class TripsController < ApplicationController
       )
     @results = JSON.parse((request.run).body)
     session["access_token"] = @results["access_token"]
-    # binding.pry
+  
     session["instagram_user_id"] = @results["user"]["id"]
     redirect_to new_trip_path
   end
@@ -149,7 +149,7 @@ class TripsController < ApplicationController
         # image = MiniMagick::Image.open(media["images"]["thumbnail"]["url"])
         # binding.pry
       end
-      binding.pry
+      # binding.pry
       redirect_to edit_trip_path @trip[:id]
     end
   end

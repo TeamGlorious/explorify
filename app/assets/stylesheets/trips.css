@@ -1,5 +1,13 @@
 .tripbody {
    background-color: #2F3835;
+   background: url(overlay.png);
+}
+
+.all {
+   background-color: #F2F2F2;
+   padding-left: 50px;
+   padding-top: 20px;
+  /* box-shadow: 2px 2px 2px black;*/
 }
 
 #map-container {
@@ -35,3 +43,28 @@
    color: black;
 }
 
+.triptitle {
+   size: 40px;
+}
+
+.tripbody .btn {
+   width: 4em;
+   height: 4em;
+   color: white;
+   background-color: #850007;
+}
+
+.tripbody .btn:hover {
+
+ background-color: black;  
+}
+
+
+.insta { 
+   font-size: 25px;
+}
+
+#poop {
+   background-color: red;
+   padding-left: 50px;
+}
