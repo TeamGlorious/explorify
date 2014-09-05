@@ -1,17 +1,11 @@
 <body class="tripbody">
 
   <% if session["access_token"] != nil %>
-<<<<<<< HEAD
-
   	<div class="col-lg-3 col-lg-offset-5">
   	<br>
   	<br>
     <h3 class="insta text-center">Thank you.</h3><br>
     <h3 class="insta text-center">Please enter your journey details:</h3><br>
-=======
-    <h2 class="text-center">Thank you.</h2>
-    <h3 class="text-center">Please enter your trip details:</h3><br>
->>>>>>> 992f0679e22ee152ea9887170394356a8fade3ae
     <%= render partial: "shared/flash" %>
     <%= render partial: "trip_form", locals: {trip: @trip, button_text: "Go!"} %>
     </div>
