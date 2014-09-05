@@ -19,7 +19,6 @@ class TripsController < ApplicationController
         new_trip["rand_img"] = media
       end
       @trips_arr.push new_trip
-      
     end
   end
 
@@ -55,6 +54,7 @@ class TripsController < ApplicationController
   def create
 
     @results_arr = []
+
     # Unix time 8 weeks
     two_months = 4838400
 
@@ -85,31 +85,34 @@ class TripsController < ApplicationController
     else
 
       # temporarily using other student's instagram id since they have more photos than I do
-      shawn_id = 144837249
-      steph_id = 198234099
-      palmer_id = 18145159
+      # DEBUG REMOVE ME FOR PRODUCTION
+      sh_id = 144837249
+      st_id = 198234099
+      pa_id = 18145159
 
 
-      if @trip.date_start != "" && @trip.date_end != ""
+      # This is currently disabled since validations now require date ranges
+      # if @trip.date_start != "" && @trip.date_end != ""
         # limit searches to four months
-        date_start = Date.parse(@trip.date_start).to_time.to_i
-        date_end = Date.parse(@trip.date_end).to_time.to_i
+        # date_start = Date.parse(@trip.date_start).to_time.to_i
+        # date_end = Date.parse(@trip.date_end).to_time.to_i
         # if date_end - date_start > two_months * 2
         #   date_start = date_end - (two_months * 2)
         # end
-      end
+      # end
 
       # Instagram has a hard cap of 33 media returned per query.
       # This loop does multiple queries to get all of the media during a time frame
       length = 33
       while length >= 33
-        params = {:access_token => access_token, :count => 100, :min_timestamp => date_start, :max_timestamp => date_end}
+        params = {:access_token => access_token, :count => 33, :min_timestamp => date_start, :max_timestamp => date_end}
         request = Typhoeus.get(
+
           # this is the production url
           # "https://api.instagram.com/v1/users/#{session['instagram_user_id']}/media/recent/",
 
-          # this is the Shawn specific url
-          "https://api.instagram.com/v1/users/#{shawn_id}/media/recent/",
+          # this is the Shawn specific url  DEBUG REMOVE ME FOR PRODUCTION
+          "https://api.instagram.com/v1/users/#{sh_id}/media/recent/",
           :params => params
         )
         query_results = JSON.parse(request.body)
@@ -148,18 +151,18 @@ class TripsController < ApplicationController
     end
   end
 
+
   def show
+    if current_user
+      @current_user = current_user
+      @trip = Trip.find_by_id(params[:id])
+      @user = User.find_by_id(@trip.id)
+      puts @current_user
 
-  if current_user
-    @current_user = current_user
-    @trip = Trip.find_by_id(params[:id])
-    @user = User.find_by_id(@trip.id)
-    puts @current_user
+      # puts "HERE ARE OUR TRIPS!"
+      # puts @trips
 
-    puts "HERE ARE OUR TRIPS!"
-    puts @trips
-
-  end
+    end
     @media = Media.where(trip_id:params[:id]).all
     gon.locations = @media
   end
