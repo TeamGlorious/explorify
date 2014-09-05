@@ -11,6 +11,7 @@
  * file per style scope.
  *
  *= require "bootstrap-3.2.0.min"
+ *= require "bootstrap-glyphicons"
  *= require "explorify"
  *= require_tree .
  *= require_self
@@ -37,3 +38,14 @@ li a {
 	text-decoration: none;
 }
 
+.about {
+  color: #DEA716;
+}
+
+.mail {
+  font-size: 50px;
+}
+
+.item-center {
+  margin: 0 auto;
+}

@@ -1,15 +1,20 @@
-<% if @medias.length == 0 %>
-  <h2>This journey has no media!</h2>
-<% end %>
-<h1><%= @trip.title %></h1>
-<p><%= @trip.description %></p>
-<h3><%= @trip.date_start.to_time %> - <%= @trip.date_end.to_time %></h3>
+<body class="tripbody">
+  <div  class="col-lg-4 col-lg-offset-4">
 
-<%= button_to "Delete Journey", trip_path, method: :delete, class: "btn btn-default" %><br><br>
+    <% if @medias.length == 0 %>
+      <h2>This journey has no media!</h2>
+    <% end %>
+    <h1><%= @trip.title %></h1>
+    <p><%= @trip.description %></p>
+    <h3><%= @trip.date_start.to_time %> - <%= @trip.date_end.to_time %></h3>
 
-<% @medias.each do |media| %>
-  <img src="<%= media.thumbnail %>">
-  Created at: <%= media.date_taken %>
-  <%# button_to "Edit media", edit_trip_media_path(@trip, media), method: :get, class: "btn btn-default" %>
-  <%= button_to "Delete media", trip_media_path(@trip, media), method: :delete, class: "btn btn-default" %>
-<% end %>  
+    <%= button_to "Delete Journey", trip_path, method: :delete, class: "btn btn-default" %><br><br>
+
+    <% @medias.each do |media| %>
+      <img src="<%= media.thumbnail %>">
+      <h4>Created at: <%= media.date_taken %></h4>
+      <%# button_to "Edit media", edit_trip_media_path(@trip, media), method: :get, class: "btn btn-default" %>
+      <%= button_to "Delete media", trip_media_path(@trip, media), method: :delete, class: "btn btn-default" %>
+    <% end %>  
+  </div>
+</body>

@@ -15,18 +15,10 @@ class UsersController < ApplicationController
     
     if @user.errors.count > 0
       @user.errors.each do |key, value|
-        flash.now[:notice] = "#{invalid} #{key} #{value}"
+        error_string = "#{key} #{value}"
+        error_string = error_string.slice(0, 1).capitalize + error_string.slice(1..-1)
+        flash.now[:notice] = error_string
       end
-    end
-    if user_params[:email] != user_params[:email_confirmation]
-      flash.now[:notice] = "Your emails dont match."
-      @user = User.new(user_params)
-      render :new
-    end
-    if user_params[:password] != user_params[:password_confirmation]
-      flash.now[:notice] = "Your passwords dont match"
-      @user = User.new(user_params)
-      render :new
     end
     if flash.count > 0
       @user.destroy

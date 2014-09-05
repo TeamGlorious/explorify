@@ -23,6 +23,7 @@
                     
                     <% if @current_user %>
                       <li><a href="<%= logout_path %>">Logout</a></li>
+                      <li><a href="<%= user_path (@current_user) %>">Home</a>
                     <% else %>
                       <li>
                           <a href="<%= login_path %>">Sign in</a>
