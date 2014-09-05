@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   # post '/' => 'sessions#create'
   root to: 'sites#index'
   get "/about" => 'sites#about'
-  get "/contact" => 'sites#contact'
   get "/login" => "sessions#new"
   post "/login" => "sessions#create"
 

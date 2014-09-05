@@ -6,8 +6,4 @@ class SitesController < ApplicationController
   def about
     render "/sites/about"
   end
-
-  def contact
-    render "/sites/contact"
-  end
 end
