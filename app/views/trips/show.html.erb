@@ -1,3 +1,4 @@
+
 <body class="tripbody background-trips">
 
   <%= javascript_include_tag "trips" %>
@@ -9,18 +10,21 @@
 
   <div class="right-half">
 
-    <input id="search-maps" class="controls" type="text" placeholder="Search for location" style="z-index: 1;">
-  	<% if @current_user %> 
-  		<br>
-    		<h2 style = "color:#954900"> <%= @trip.title %> by <a href="/user/:id"><%= @current_user.name %></a></h2>
-  			<p style = "color:white">		
-  		  		<%= @trip.description %>	
 
+  <input id="search-maps" class="controls" type="text" placeholder="Search for location" style="z-index: 1;">
+
+
+	<% if @current_user %>
+		<br>
+  		<h2 style = "color:#954900"> <%= @trip.title %> by <a href="/user/:id"><%= @current_user.name %></a></h2>
+
+			<p style = "color:white">
+		  		<%= @trip.description %>
   		  	</p>
   	  	<% end %>
-    <% @media.each do |media| %>
-      <img src="<%= media.thumbnail %>">
-    <% end %>
+
+  <div id="thumbnails"></div>
+
 
   </div>
 </body>

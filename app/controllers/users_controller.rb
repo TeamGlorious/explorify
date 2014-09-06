@@ -12,7 +12,7 @@ class UsersController < ApplicationController
     user_params = params.require(:user).permit(:name, :email, :email_confirmation, :password, :password_confirmation)
     @user = User.create(user_params)
     invalid = "Invalid entry: "
-    
+
     if @user.errors.count > 0
       @user.errors.each do |key, value|
         error_string = "#{key} #{value}"
@@ -31,7 +31,7 @@ class UsersController < ApplicationController
       session[:user_id] = @user.id
       flash[:notice] = "Account Created"
       flash[:notice] = "You've logged in!"
-      redirect_to @user  
+      redirect_to @user
     end
   end
 
