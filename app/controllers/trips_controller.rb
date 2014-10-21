@@ -1,7 +1,7 @@
 class TripsController < ApplicationController
 
   if Rails.env.production?
-    CALLBACK_URL = "http://explorify.herokuap.com/trips/callback"
+    CALLBACK_URL = "http://explorify.herokuapp.com/trips/callback"
   else
     CALLBACK_URL = "http://localhost:3000/trips/callback"
   end
