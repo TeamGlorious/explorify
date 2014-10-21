@@ -1,6 +1,10 @@
 class TripsController < ApplicationController
 
-  CALLBACK_URL = "http://localhost:3000/trips/callback"
+  if Rails.env.production?
+    CALLBACK_URL = "explorify.herokuap.com/trips/callback"
+  else
+    CALLBACK_URL = "http://localhost:3000/trips/callback"
+  end
   CLIENT_ID = ENV["INSTAGRAM_CLIENT_ID"]
   CLIENT_SECRET = ENV["INSTAGRAM_CLIENT_SECRET"]
 
