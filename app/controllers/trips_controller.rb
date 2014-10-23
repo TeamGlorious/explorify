@@ -1,6 +1,11 @@
 class TripsController < ApplicationController
 
-  CALLBACK_URL = "http://localhost:3000/trips/callback"
+  if Rails.env.production?
+    CALLBACK_URL = "http://explorify.herokuapp.com/trips/callback"
+  else
+    CALLBACK_URL = "http://localhost:3000/trips/callback"
+  end
+
   CLIENT_ID = ENV["INSTAGRAM_CLIENT_ID"]
   CLIENT_SECRET = ENV["INSTAGRAM_CLIENT_SECRET"]
 
@@ -96,6 +101,7 @@ class TripsController < ApplicationController
         # limit searches to four months
         date_start = Date.parse(@trip.date_start).to_time.to_i
         date_end = Date.parse(@trip.date_end).to_time.to_i
+        
         if date_end - date_start > two_months * 2
           date_start = date_end - (two_months * 2)
         end
@@ -115,7 +121,9 @@ class TripsController < ApplicationController
           "https://api.instagram.com/v1/users/#{sh_id}/media/recent/",
           :params => params
         )
+
         query_results = JSON.parse(request.body)
+        binding.pry()
         if (query_results["data"].length > 0)
           length = query_results["data"].length
           # Use the last returned media object's timestamp as the new date_end for time range
@@ -135,14 +143,16 @@ class TripsController < ApplicationController
               media_new.full_res_img = media["images"]["standard_resolution"]["url"]
               media_new.med_res_img = media["images"]["low_resolution"]["url"]
               media_new.thumbnail = media["images"]["thumbnail"]["url"]
+
               if media["location"]
-                # media_new.location = true
                 media_new.lat = media["location"]["latitude"]
                 media_new.lng = media["location"]["longitude"]
                 media_new.date_taken = DateTime.strptime(media["created_time"], '%s').to_s
+
                 # moved this here so that only photos with location data are processed.  Temporary fix.
-                media_new.save
+                
               end
+              media_new.save
             end
           end
         end
